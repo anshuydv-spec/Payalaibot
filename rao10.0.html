@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RAO SAHAB V.8.0 GOD MODE</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&family=Rajdhani:wght@700;800;900&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --theme-color: #00f3ff; 
+            --black: #000000;
+            --border: 1px solid var(--theme-color);
+            --red: #ff0055;
+            --gold: #FFD700;
+            --purple: #bf00ff;
+            --card-bg: rgba(10, 10, 10, 0.95);
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            font-weight: bold !important; 
+        }
+        
+        body { 
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('https://i.pinimg.com/736x/2a/3b/93/2a3b935756776776c576576576.jpg');
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed;
+            font-family: 'Courier Prime', monospace; 
+            color: var(--theme-color); 
+            width: 100%; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+            padding-bottom: 100px;
+            display: flex; 
+            flex-direction: column; 
+            transition: 0.5s;
+        }
+
+        /* --- LOCK SCREEN & PLANS --- */
+        #lockScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow-y: auto; padding: 20px; }
+        .ls-title { font-family: 'Rajdhani'; font-size: 30px; color: var(--theme-color); text-shadow: 0 0 20px var(--theme-color); margin-bottom: 5px; text-align: center; margin-top: 30px; }
+        .ls-sub { color: #fff; font-size: 12px; margin-bottom: 20px; text-align: center; }
+        .plans-scroll { display: flex; overflow-x: auto; width: 100%; gap: 15px; padding: 10px 0; scroll-snap-type: x mandatory; margin-bottom: 20px; }
+        .plan-card { min-width: 200px; background: #111; border: 1px solid #333; border-radius: 15px; padding: 20px; text-align: center; scroll-snap-align: center; flex-shrink: 0; position: relative; overflow: hidden; }
+        .plan-price { font-size: 35px; color: var(--theme-color); font-family: 'Rajdhani'; margin: 10px 0; }
+        .plan-desc { font-size: 11px; color: #aaa; margin-bottom: 15px; line-height: 1.5; }
+        .device-id-box { background: rgba(0,243,255,0.1); border: 1px dashed var(--theme-color); padding: 15px; width: 100%; max-width: 350px; text-align: center; border-radius: 10px; margin-bottom: 15px; cursor: pointer; }
+        .dev-label { font-size: 10px; color: var(--theme-color); margin-bottom: 5px; }
+        .dev-code { font-size: 20px; color: #fff; letter-spacing: 2px; font-family: 'Rajdhani'; }
+        .key-input { width: 100%; max-width: 350px; padding: 15px; background: #111; border: 1px solid var(--theme-color); color: #fff; text-align: center; font-size: 14px; border-radius: 8px; margin-bottom: 15px; font-family: 'Courier Prime'; }
+        .btn-unlock { width: 100%; max-width: 350px; background: var(--theme-color); color: #000; padding: 15px; font-size: 18px; font-family: 'Rajdhani'; font-weight: 900; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 15px; box-shadow: 0 0 20px rgba(0,243,255,0.4); }
+        .btn-buy { width: 100%; max-width: 350px; background: #0088cc; color: #fff; padding: 15px; font-size: 16px; font-family: 'Rajdhani'; font-weight: 900; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; text-align: center; display: block; margin-bottom: 30px; }
+
+        /* --- WEATHER & EFFECTS --- */
+        #weather-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
+        .rain-drop { position: absolute; width: 2px; height: 15px; background: rgba(0, 243, 255, 0.4); bottom: 100%; animation: fall linear infinite; }
+        @keyframes fall { to { transform: translateY(100vh); } }
+        .lightning { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0); pointer-events: none; z-index: 100000; display: none; }
+        .lightning.strike { display: block; animation: flash 0.5s ease-out; }
+        @keyframes flash { 0% { background: rgba(255,255,255,0.8); } 20% { background: rgba(255,255,255,0); } 40% { background: rgba(255,255,255,0.6); } 100% { background: rgba(255,255,255,0); } }
+
+        /* --- VISUALS --- */
+        .garland { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background-image: url('https://png.pngtree.com/png-clipart/20230913/ourmid/pngtree-marigold-flower-garland-festival-decoration-png-image_10026362.png'); background-repeat: repeat-x; background-size: contain; z-index: 100000; pointer-events: none; }
+        .rgb-border { position: fixed; z-index: 9999; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; border: 4px solid transparent; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); display: none; }
+        .rgb-border.active { display: block; }
+        .rgb-border::before { content: ''; position: absolute; top: -4px; bottom: -4px; left: -4px; right: -4px; background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000); z-index: -1; animation: rgbRunning 3s linear infinite; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 4px; }
+        @keyframes rgbRunning { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
+
+        .disco-active body { animation: discoBg 0.5s infinite alternate; }
+        .disco-active .divine-header, .disco-active .pred-card, .disco-active .wave-box { animation: discoBorder 0.3s infinite alternate; }
+        @keyframes discoBg { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(90deg); } }
+        @keyframes discoBorder { 0% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; } 50% { border-color: #00f3ff; box-shadow: 0 0 20px #00f3ff; } 100% { border-color: #0000ff; box-shadow: 0 0 20px #0000ff; } }
+
+        /* --- FIXED HEADER --- */
+        .fixed-header { width: 100%; background: #000; border-bottom: 2px solid var(--theme-color); padding: 15px 0; position: fixed; top: 0; left: 0; z-index: 10001; margin-top: 25px; text-align: center; box-shadow: 0 5px 20px rgba(0, 243, 255, 0.3); }
+        .fixed-title { font-family: 'Rajdhani'; font-size: 26px; font-weight: 900; background: linear-gradient(to right, #00f3ff, #bf00ff, #00f3ff); -webkit-background-clip: text; background-clip: text; color: transparent; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.2); }
+        .container { width: 100%; padding: 10px; position: relative; z-index: 2; display: block; flex: 1; margin-top: 90px; }
+
+        /* --- USER PROFILE SECTION --- */
+        .user-profile { background: rgba(0,0,0,0.6); border: 1px solid #333; border-radius: 15px; padding: 15px; display: flex; align-items: center; gap: 15px; margin-bottom: 20px; cursor: pointer; transition: 0.3s; backdrop-filter: blur(5px); }
+        .user-profile:hover { border-color: var(--theme-color); box-shadow: 0 0 15px rgba(0,243,255,0.2); }
+        .profile-pic { width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--theme-color); object-fit: cover; box-shadow: 0 0 10px var(--theme-color); }
+        .profile-info { flex: 1; }
+        .greeting-text { font-family: 'Rajdhani'; color: #fff; font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 5px;}
+        .greeting-text span { color: var(--theme-color); text-shadow: 0 0 5px var(--theme-color); }
+        .sub-greeting { font-size: 11px; color: #fff; font-family: 'Courier Prime'; margin-top: 4px; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+        
+        #profileModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 20000; justify-content: center; align-items: center; }
+        .profile-box { background: #111; border: 1px solid var(--theme-color); padding: 25px; border-radius: 15px; width: 90%; max-width: 350px; text-align: center; box-shadow: 0 0 30px rgba(0,243,255,0.3); }
+        .profile-box h3 { color: var(--theme-color); font-family: 'Rajdhani'; margin-bottom: 15px; font-size: 24px; }
+        .prof-input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; margin-bottom: 15px; border-radius: 8px; font-family: 'Courier Prime'; font-size: 12px; outline: none; }
+        .prof-file-label { display: block; background: #222; color: #fff; padding: 12px; border-radius: 8px; border: 1px dashed var(--theme-color); margin-bottom: 15px; cursor: pointer; font-family: 'Rajdhani'; font-size: 14px; }
+        #profPicInput { display: none; }
+        .prof-btn { background: var(--theme-color); color: #000; border: none; padding: 12px 20px; font-family: 'Rajdhani'; font-weight: 900; font-size: 16px; border-radius: 8px; cursor: pointer; width: 100%; }
+
+        /* --- DIVINE HEADER --- */
+        .divine-header { margin-top: 10px; margin-bottom: 20px; position: relative; display: flex; flex-direction: column; align-items: center; padding: 15px; border-bottom: 2px solid var(--purple); background: rgba(0,0,0,0.8); border-radius: 15px; backdrop-filter: blur(5px); z-index: 2; }
+        .krishna-container { position: relative; width: 150px; height: 150px; display: flex; justify-content: center; align-items: center; }
+        .divine-aura { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(191,0,255,0.4) 60%, transparent 100%); animation: auraPulse 2s infinite alternate; z-index: 1; box-shadow: 0 0 40px var(--gold); }
+        .krishna-img { width: 100%; height: 100%; object-fit: cover; z-index: 2; border-radius: 50%; border: 3px solid var(--gold); background: #000; overflow: hidden; }
+        .krishna-img img { width: 100%; height: 100%; object-fit: cover; }
+        .hindi-text { font-family: 'Tiro Devanagari Hindi', serif; color: var(--gold); font-size: 32px; text-shadow: 0 0 10px var(--red); margin-top: 10px; z-index: 2; font-weight: bold; }
+        .jhalar { position: absolute; bottom: -5px; left: 20px; font-size: 24px; color: var(--red); animation: swing 2s ease-in-out infinite; z-index: 4; }
+
+        /* --- WAVES --- */
+        .wave-row { display: flex; gap: 15px; margin-bottom: 15px; height: 120px; }
+        .wave-box { flex: 1; border-radius: 15px; position: relative; overflow: hidden; background: #1a1a1a; display: flex; flex-direction: column; justify-content: space-between; padding: 10px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); border: 1px solid #333; }
+        .wave-text { position: relative; z-index: 2; font-family: 'Rajdhani'; font-size: 14px; color: #fff; }
+        .wave-text span { font-size: 24px; font-weight: 900; }
+        .wave-svg { position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; z-index: 1; }
+        .win-box .wave-text span { color: var(--theme-color); }
+        .loss-box .wave-text span { color: #d4ff59; }
+
+        /* --- MAIN INFO AREA --- */
+        .main-info-area { display: flex; gap: 10px; height: 160px; margin-bottom: 25px; }
+        .big-image-box { flex: 1; border: 1px solid var(--purple); border-radius: 10px; overflow: hidden; background: #000; position: relative; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 10px rgba(191, 0, 255, 0.3); }
+        .big-image-box img { width: 100%; height: 100%; object-fit: contain; }
+        .scanning-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--purple); box-shadow: 0 0 10px var(--purple); animation: scan 2s linear infinite; pointer-events:none;}
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        
+        .side-ring-meters { display: flex; flex-direction: column; justify-content: space-between; width: 60px; }
+        .side-ring { width: 100%; aspect-ratio: 1; position: relative; display: flex; align-items: center; justify-content: center; background: #111; border-radius: 10px; border: 1px solid #333; }
+        .side-ring svg { width: 45px; height: 45px; transform: rotate(-90deg); position: absolute; }
+        .sr-bg { fill: none; stroke: #222; stroke-width: 4; }
+        .sr-val { fill: none; stroke: var(--theme-color); stroke-width: 4; stroke-dasharray: 125; stroke-dashoffset: 125; transition: 1s ease; }
+        .sr-txt { font-family: 'Rajdhani'; font-size: 10px; color: #fff; z-index: 2; font-weight: 900; }
+
+        /* --- IPHONE GAME SELECTOR --- */
+        .section-title { color: #fff; font-family: 'Rajdhani'; font-size: 18px; margin-bottom: 10px; text-shadow: 0 0 5px rgba(255,255,255,0.5); display: flex; align-items: center; gap: 8px; }
+        .section-title i { color: var(--theme-color); }
+        .iphone-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; padding: 10px 0; margin-bottom: 20px; width: 100%; }
+        .iphone-slider::-webkit-scrollbar { display: none; }
+        .iphone-card { min-width: 110px; height: 190px; scroll-snap-align: center; border-radius: 20px; border: 4px solid #333; position: relative; overflow: hidden; background: #000; flex-shrink: 0; transition: 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: pointer; }
+        .iphone-card.active { border-color: var(--theme-color); box-shadow: 0 0 20px rgba(0,243,255,0.4); transform: translateY(-5px); }
+        .iphone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 45px; height: 12px; background: #333; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; z-index: 10; transition: 0.3s; }
+        .iphone-card.active .iphone-notch { background: var(--theme-color); }
+        .iphone-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; position: absolute; top:0; left:0; z-index: 1; transition: 0.3s; }
+        .iphone-card.active .iphone-img { opacity: 0.8; filter: drop-shadow(0 0 10px var(--theme-color)); }
+        .iphone-name { position: absolute; bottom: 15px; font-family: 'Rajdhani'; font-size: 14px; color: #fff; font-weight: 900; text-align: center; width: 90%; background: rgba(0,0,0,0.7); border-radius: 5px; padding: 5px 0; z-index: 5; border: 1px solid #444; transition: 0.3s; }
+        .iphone-card.active .iphone-name { border-color: var(--theme-color); color: var(--theme-color); box-shadow: 0 0 10px var(--theme-color); }
+
+        /* --- CIRCULAR SELECT TIMER --- */
+        .timer-circle-grid { display: flex; justify-content: space-between; margin-bottom: 25px; padding: 0 5px; }
+        .timer-circle { width: 65px; height: 65px; border-radius: 50%; background: #111; border: 2px solid #333; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 10px rgba(0,0,0,0.5); }
+        .timer-circle i { font-size: 20px; color: #666; margin-bottom: 5px; transition: 0.3s; }
+        .timer-circle span { font-family: 'Rajdhani'; font-size: 11px; color: #888; font-weight: bold; }
+        .timer-circle.active { border-color: var(--purple); background: rgba(191,0,255,0.1); box-shadow: 0 0 15px rgba(191,0,255,0.4); transform: scale(1.05); }
+        .timer-circle.active i { color: var(--theme-color); text-shadow: 0 0 10px var(--theme-color); }
+        .timer-circle.active span { color: #fff; }
+
+        /* --- SELECT SERVER UI --- */
+        .server-status-box { background: rgba(0,0,0,0.6); border: 1px solid #333; border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: center; position: relative; overflow: hidden; }
+        .server-status-box.connected { border-color: var(--theme-color); box-shadow: inset 0 0 20px rgba(0,243,255,0.1); }
+        .srv-glow-line { position: absolute; top: 0; left: -100%; width: 50%; height: 2px; background: linear-gradient(90deg, transparent, var(--theme-color), transparent); animation: srvScan 2s linear infinite; }
+        @keyframes srvScan { 100% { left: 100%; } }
+        .srv-title { font-size: 11px; color: #888; margin-bottom: 8px; font-family: 'Courier Prime'; letter-spacing: 1px; }
+        .srv-code-text { font-family: 'Rajdhani'; font-size: 18px; color: #fff; letter-spacing: 2px; }
+        .srv-code-text span { color: var(--theme-color); text-shadow: 0 0 5px var(--theme-color); }
+        .srv-code-text.disc span { color: var(--red); text-shadow: 0 0 5px var(--red); }
+
+        /* --- FETCH RESULT BOX --- */
+        .fetch-box { border: 1px solid var(--purple); padding: 25px 20px; text-align: center; border-radius: 15px; margin-bottom: 20px; background: rgba(10,10,10,0.9); box-shadow: inset 0 0 30px rgba(191,0,255,0.1); position: relative; backdrop-filter: blur(5px); }
+        .fetch-period { font-size: 14px; color: #aaa; margin-bottom: 15px; font-family: 'Courier Prime'; }
+        .fetch-period span { color: #fff; font-size: 18px; }
+        .fetch-timer { font-size: 45px; font-weight: 900; color: var(--theme-color); text-shadow: 0 0 15px var(--theme-color); font-family: 'Rajdhani'; letter-spacing: 3px; margin-bottom: 10px; }
+        .fetch-status { font-size: 20px; color: var(--gold); font-family: 'Rajdhani'; letter-spacing: 2px; animation: pulseTxt 1s infinite alternate; }
+        @keyframes pulseTxt { from { opacity: 0.6; } to { opacity: 1; text-shadow: 0 0 10px var(--gold); } }
+
+        /* --- 5+5 BALLS & BARS --- */
+        .balls-grid-container { background: rgba(0,0,0,0.8); padding: 15px; border-radius: 15px; border: 1px solid #333; margin-bottom: 15px; position: relative; overflow: hidden; }
+        .balls-row { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .balls-row:last-child { margin-bottom: 0; }
+        .ball-item { width: 18%; aspect-ratio: 1; border-radius: 50%; border: 2px solid #444; display: flex; justify-content: center; align-items: center; font-family: 'Rajdhani'; font-size: 20px; color: #666; position: relative; z-index: 2; transition: 0.3s; background: #111; }
+        .ball-item.active { border-color: #fff; color: #fff; text-shadow: 0 0 5px #fff; transform: scale(1.1); box-shadow: 0 0 15px var(--theme-color); background: rgba(0,243,255,0.2); }
+        .ball-bg-glow { position: absolute; width: 100%; height: 100%; top: 0; left: 0; border-radius: 50%; z-index: 1; opacity: 0; transition: 0.3s; }
+        .ball-item.dj-active .ball-bg-glow { opacity: 1; animation: djFlash 0.5s infinite alternate; }
+
+        .footer-graph { margin-top: 20px; border: 1px solid #333; border-radius: 10px; padding: 15px; background: rgba(0,0,0,0.8); position: relative; overflow: hidden; }
+        .graph-title { font-size: 12px; color: var(--gold); text-align: center; margin-bottom: 10px; font-family: 'Rajdhani'; letter-spacing: 2px; }
+        .live-bars { display: flex; align-items: flex-end; justify-content: space-between; height: 60px; gap: 2px; }
+        .l-bar { width: 8px; background: var(--theme-color); border-radius: 2px 2px 0 0; transition: height 0.5s ease; }
+
+        /* --- GAME OVERLAY & FLOATING AI BTN --- */
+        .game-frame-container { width: 100%; height: 85vh; display: flex; flex-direction: column; position: relative; z-index: 2;}
+        iframe { width: 100%; height: 100%; border: none; background: #fff; flex: 1; border-radius: 10px; }
+        .ai-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; display: none; }
+        .ai-overlay.active-win { animation: flashGreen 1s infinite; box-shadow: inset 0 0 80px #00f3ff; background: rgba(0, 243, 255, 0.15); border: 2px solid #00f3ff; }
+        .ai-overlay.active-loss { animation: flashRed 1s infinite; box-shadow: inset 0 0 80px #ff0055; background: rgba(255, 0, 85, 0.15); border: 2px solid #ff0055; }
+        .game-ai-float { position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); border: 2px solid var(--theme-color); color: var(--theme-color); padding: 10px 20px; border-radius: 30px; font-family: 'Rajdhani'; font-size: 16px; font-weight: 900; box-shadow: 0 0 15px var(--theme-color); z-index: 100; cursor: pointer; animation: floatGlow 1.5s infinite alternate; }
+        @keyframes floatGlow { from { box-shadow: 0 0 10px var(--theme-color); } to { box-shadow: 0 0 25px var(--theme-color), 0 0 5px #fff; } }
+
+        /* --- AI PRO TAB --- */
+        #tabAI { padding: 10px 0; }
+        .ai-meters-row { display: flex; justify-content: space-around; margin-bottom: 25px; }
+        .ai-meter { width: 30%; position: relative; display: flex; flex-direction: column; align-items: center; }
+        .ai-meter svg { width: 80px; height: 80px; transform: rotate(-90deg); }
+        .ai-bg-circ { fill: none; stroke: #222; stroke-width: 8; }
+        .ai-val-circ { fill: none; stroke-width: 8; stroke-dasharray: 220; stroke-dashoffset: 220; transition: 1s ease; stroke-linecap: round; }
+        .ai-meter-txt { position: absolute; top: 32px; font-size: 14px; color: #fff; font-family: 'Rajdhani'; font-weight: 900; }
+        .ai-meter-label { color: #888; font-size: 11px; margin-top: 5px; font-weight: bold; }
+
+        .ss-action-panel { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
+        .ss-current-box { background: rgba(0, 243, 255, 0.1); border: 2px solid var(--theme-color); border-radius: 15px; padding: 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
+        .ss-cur-left { background: var(--theme-color); padding: 10px 20px; border-radius: 10px; font-family: 'Rajdhani'; font-size: 28px; color: #000; font-weight: 900; letter-spacing: 2px; box-shadow: 0 0 15px var(--theme-color); }
+        .ss-cur-right { text-align: right; }
+        .ss-cur-lbl { color: #fff; font-family: 'Rajdhani'; font-size: 16px; margin-bottom: 5px; }
+        .ss-cur-val { color: var(--theme-color); font-family: 'Rajdhani'; font-size: 24px; font-weight: 900; text-shadow: 0 0 10px var(--theme-color); }
+
+        .ss-prev-box { background: rgba(191, 0, 255, 0.1); border: 2px solid var(--purple); border-radius: 15px; padding: 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 0 20px rgba(191, 0, 255, 0.2); }
+        .ss-prev-left { font-family: 'Courier Prime'; font-size: 16px; color: #fff; letter-spacing: 3px; text-shadow: 0 0 5px #fff; }
+        .ss-prev-right { text-align: right; }
+        .ss-prev-lbl { color: #fff; font-family: 'Rajdhani'; font-size: 16px; margin-bottom: 5px; }
+        .ss-prev-val { color: var(--purple); font-family: 'Rajdhani'; font-size: 24px; font-weight: 900; text-shadow: 0 0 10px var(--purple); }
+
+        .matrix-container { background: #0a0a0a; border: 1px solid #222; border-radius: 15px; padding: 20px; margin-bottom: 25px; box-shadow: inset 0 0 20px rgba(0,0,0,1); }
+        .matrix-title { text-align: center; color: #555; font-family: 'Rajdhani'; font-size: 14px; letter-spacing: 3px; margin-bottom: 15px; text-transform: uppercase; }
+        .dot-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; justify-items: center; }
+        .dot { width: 22px; height: 22px; border-radius: 50%; background: #1a1a1a; border: 1px solid #333; transition: 0.5s; }
+        .dot.big { background: var(--theme-color); border-color: var(--theme-color); box-shadow: 0 0 10px var(--theme-color); }
+        .dot.small { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 10px var(--purple); }
+
+        .calendar-panel { display: flex; justify-content: space-between; background: #0a0a0a; border: 1px solid #222; border-radius: 15px; padding: 15px 10px; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,1); }
+        .cal-day { font-family: 'Rajdhani'; font-size: 12px; color: #555; background: #111; padding: 8px 10px; border-radius: 8px; transition: 0.3s; }
+        .cal-day.active { background: var(--purple); color: #fff; box-shadow: 0 0 10px rgba(191,0,255,0.5); transform: translateY(-3px); }
+
+        .ai-section-title { color: var(--theme-color); font-family: 'Rajdhani'; font-size: 16px; font-weight: 900; margin: 15px 0 10px 0; border-bottom: 2px solid rgba(0,243,255,0.2); padding-bottom: 5px; text-shadow: 0 0 10px var(--theme-color); }
+        .srv-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 5px; }
+        .srv-btn { background: #111; border: 1px solid #333; color: #888; padding: 12px; font-size: 14px; cursor: pointer; font-weight: bold; border-radius: 8px; text-align: center; font-family: 'Rajdhani'; transition: 0.3s; }
+        .srv-btn.active { background: var(--purple); color: #fff; box-shadow: 0 0 15px var(--purple); border-color: var(--purple); }
+        .srv-status { text-align: center; color: var(--theme-color); font-size: 12px; margin-top: 10px; margin-bottom: 25px; font-family: 'Courier Prime'; font-weight: 900; text-shadow: 0 0 5px var(--theme-color); }
+
+        .btn-ai-connect { background: var(--theme-color); color: #000; padding: 15px; width: 100%; border: none; border-radius: 10px; font-family: 'Rajdhani'; font-size: 18px; font-weight: 900; cursor: pointer; box-shadow: 0 0 20px rgba(0,243,255,0.4); transition: 0.3s; margin-bottom:15px; }
+        .btn-ai-connect:active { transform: translateY(2px); }
+        .btn-start-session { background: transparent; border: 2px solid var(--theme-color); color: var(--theme-color); padding: 15px; width: 100%; border-radius: 10px; font-family: 'Rajdhani'; font-size: 18px; font-weight: 900; cursor: pointer; margin-bottom: 25px; transition: 0.3s; box-shadow: 0 0 15px rgba(0,243,255,0.2); }
+        .btn-start-session.running { background: rgba(255, 0, 85, 0.2); border-color: var(--red); color: var(--red); box-shadow: 0 0 20px rgba(255, 0, 85, 0.4); }
+
+        .switch-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; color: #fff; font-weight:900; }
+        
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; border: 1px solid #555; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 2px; bottom: 2px; background-color: #fff; transition: .4s; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        input:checked + .slider { background-color: var(--theme-color); border-color: var(--theme-color); box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+        input:checked + .slider:before { transform: translateX(20px); background-color: #fff; }
+        
+        .inp-mini, .inp-key { width: 100%; background: #111; border: 1px solid var(--theme-color); color: #fff; padding: 10px; border-radius: 5px; font-size: 12px; margin-bottom: 10px; font-family: 'Courier Prime'; font-weight:bold; outline:none; }
+        .inp-mini { display: none; }
+        .inp-mini::placeholder, .inp-key::placeholder { color: #666; }
+
+        /* --- OTHERS --- */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 1px solid #333; display: flex; justify-content: space-around; padding: 12px 0; z-index: 1000; }
+        .nav-item { color: #444; text-align: center; cursor: pointer; transition: 0.3s; flex: 1; font-size: 10px;}
+        .nav-item i { font-size: 16px; display: block; margin-bottom: 3px; }
+        .nav-item.active { color: var(--theme-color); text-shadow: 0 0 10px var(--theme-color); transform: translateY(-3px); }
+        .tab-content { display: none; width: 100%; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* POPUPS */
+        #supportPopup { position: fixed; top: 100px; left: 10px; right: 10px; background: rgba(0,0,0,0.9); border: 1px solid var(--theme-color); padding: 15px; border-radius: 10px; z-index: 999; text-align: center; display: none; box-shadow: 0 0 20px rgba(0, 243, 255, 0.3); }
+        .sup-close { position: absolute; top: 5px; right: 10px; color: #fff; cursor: pointer; font-size: 18px; }
+        #resultPopup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; animation: zoomIn 0.3s ease; }
+        .popup-box { background: #000; border: 2px solid #fff; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 0 50px rgba(0,243,255,0.5); transform: scale(1.2); }
+        .popup-title { font-family: 'Rajdhani'; font-size: 60px; font-weight: 900; margin-bottom: 10px; }
+        .popup-num { font-size: 40px; color: #fff; font-weight: bold; }
+        .win-mode .popup-box { border-color: var(--theme-color); box-shadow: 0 0 50px var(--theme-color); }
+        .win-mode .popup-title { color: var(--theme-color); text-shadow: 0 0 20px var(--theme-color); }
+        .loss-mode .popup-box { border-color: var(--red); box-shadow: 0 0 50px var(--red); }
+        .loss-mode .popup-title { color: var(--red); text-shadow: 0 0 20px var(--red); }
+        @keyframes zoomIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        #toast { visibility: hidden; min-width: 250px; background-color: #000; color: var(--theme-color); text-align: center; border: 1px solid var(--theme-color); padding: 16px; position: fixed; z-index: 10005; left: 50%; bottom: 100px; transform: translateX(-50%); font-size: 12px; border-radius: 5px; font-weight: bold; }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 4.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 100px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 100px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+        
+        .history-table { width:100%; border-collapse:collapse; margin-top:10px; text-align:center; font-size:13px; background: rgba(0,0,0,0.7); position: relative; z-index: 5;}
+        .history-table th { border-bottom:1px solid var(--theme-color); padding: 8px; color: var(--gold); }
+        .history-table td { border-bottom:1px solid #333; padding: 8px; }
+    </style>
+</head>
+<body id="bodyEl">
+
+    <div id="lockScreen">
+        <div class="ls-title">RAO SAHAB V.8.0</div>
+        <div class="ls-sub">PREMIUM AI PREDICTION ENGINE</div>
+        
+        <div class="plans-scroll">
+            <div class="plan-card" style="border-color:var(--theme-color);">
+                <div style="color:var(--theme-color); font-size:12px;">STARTER</div>
+                <div class="plan-price">₹49</div>
+                <div class="plan-desc">1 Day Access<br>Basic AI Engine<br>Level 3 Safe</div>
+            </div>
+            <div class="plan-card" style="border-color:#00f3ff;">
+                <div style="color:#00f3ff; font-size:12px;">WEEKLY PRO</div>
+                <div class="plan-price">₹99</div>
+                <div class="plan-desc">7 Days Access<br>Sniper AI Engine<br>Auto Telegram</div>
+            </div>
+            <div class="plan-card" style="border-color:#bf00ff;">
+                <div style="color:#bf00ff; font-size:12px;">MONTHLY ELITE</div>
+                <div class="plan-price">₹129</div>
+                <div class="plan-desc">30 Days Access<br>AI Pro Mode<br>Reverse System</div>
+            </div>
+            <div class="plan-card" style="border-color:#ff0055;">
+                <div style="color:#ff0055; font-size:12px;">VIP LIFETIME</div>
+                <div class="plan-price">₹149</div>
+                <div class="plan-desc">God Mode Access<br>Custom Servers<br>No Ads</div>
+            </div>
+        </div>
+
+        <div class="device-id-box" onclick="copyDeviceId()">
+            <div class="dev-label">YOUR DEVICE ID (CLICK TO COPY)</div>
+            <div class="dev-code" id="lsDeviceId">RAO-WAIT-....</div>
+        </div>
+
+        <input type="text" id="lsKeyInput" class="key-input" placeholder="PASTE ACCESS KEY HERE">
+        <button class="btn-unlock" onclick="unlockBot()">UNLOCK SYSTEM</button>
+        <a href="https://t.me/RAOSAHAB0034" target="_blank" class="btn-buy"><i class="fab fa-telegram"></i> BUY ACCESS KEY FROM ADMIN</a>
+    </div>
+
+    <div id="profileModal">
+        <div class="profile-box">
+            <h3>EDIT PROFILE</h3>
+            <input type="text" id="profNameInput" class="prof-input" placeholder="Enter Your Name">
+            
+            <label class="prof-file-label">
+                <i class="fas fa-image"></i> Select Profile Photo
+                <input type="file" id="profPicInput" accept="image/*">
+            </label>
+            
+            <button class="prof-btn" onclick="saveProfileData()">SAVE PROFILE</button>
+            <div style="margin-top:15px; color:#888; font-size:12px; cursor:pointer;" onclick="document.getElementById('profileModal').style.display='none'">CANCEL</div>
+        </div>
+    </div>
+
+    <div id="weather-container"></div>
+    <div class="lightning" id="lightning-flash"></div>
+    <div class="garland"></div>
+    <div class="rgb-border" id="rgbBorder"></div>
+
+    <div class="fixed-header">
+        <div class="fixed-title">RAO SAHAB V.8.0</div>
+    </div>
+
+    <div id="supportPopup">
+        <div class="sup-close" onclick="document.getElementById('supportPopup').style.display='none'">&times;</div>
+        <h3 style="color:var(--gold); font-family:'Rajdhani'; margin-bottom:10px;">CUSTOMER SUPPORT</h3>
+        <p style="font-size:12px; color:#ccc; margin-bottom:15px;">Need help or want to upgrade plan?</p>
+        <button class="btn-unlock" style="background:#0088cc; border:none; color:#fff;" onclick="window.open('https://t.me/RAOSAHAB0034', '_blank')">CONTACT @RAOSAHAB0034</button>
+    </div>
+
+    <div id="resultPopup">
+        <div class="popup-box">
+            <div class="popup-title" id="popTitle">WIN</div>
+            <div class="popup-num" id="popNum">0</div>
+        </div>
+    </div>
+
+    <div class="container" id="mainApp">
+        <div class="divine-header">
+            <div class="krishna-container">
+                <div class="divine-aura"></div>
+                <div class="krishna-img">
+                    <img src="https://i.ibb.co/LDtsvwHt/photo-6314602691614674283-x.jpg">
+                </div>
+            </div>
+            <div class="hindi-text">दादा कृष्ण</div>
+            <div style="color:var(--theme-color); font-size:12px; margin-top:5px; font-family:'Rajdhani';" id="welcomeMsg">GOD MODE ACTIVE</div>
+            <div class="jhalar">🎋</div>
+        </div>
+
+        <div id="tabHome" class="tab-content active">
+            
+            <div class="user-profile" onclick="openProfileModal()">
+                <img id="userAvatar" src="https://i.ibb.co/LDtsvwHt/photo-6314602691614674283-x.jpg" class="profile-pic">
+                <div class="profile-info">
+                    <div class="greeting-text">Hey <span id="userName">Rao Sahab</span>,</div>
+                    <div class="sub-greeting">LIVE FROM INDIA 🇮🇳</div>
+                </div>
+                <i class="fas fa-edit" style="color:#666; font-size:14px;"></i>
+            </div>
+
+            <div class="wave-row">
+                <div class="wave-box win-box">
+                    <div class="wave-text">Win <span id="winAccTxt">90%</span> &uarr;</div>
+                    <svg class="wave-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <defs><linearGradient id="gWin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--theme-color)" stop-opacity="0.6"/><stop offset="100%" stop-color="var(--theme-color)" stop-opacity="0"/></linearGradient></defs>
+                        <path id="pathWinWave" d="M0,50 Q25,30 50,60 T100,30 L100,100 L0,100 Z" fill="url(#gWin)" stroke="var(--theme-color)" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="wave-box loss-box">
+                    <div class="wave-text" style="color:#aaa;">Loss <span id="lossAccTxt">10%</span> &darr;</div>
+                    <svg class="wave-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <defs><linearGradient id="gLoss" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4ff59" stop-opacity="0.6"/><stop offset="100%" stop-color="#d4ff59" stop-opacity="0"/></linearGradient></defs>
+                        <path id="pathLossWave" d="M0,30 Q25,70 50,40 T100,60 L100,100 L0,100 Z" fill="url(#gLoss)" stroke="#d4ff59" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="main-info-area">
+                <div class="big-image-box">
+                    <div class="scanning-line"></div>
+                    <img src="https://i.ibb.co/9HRqYqpg/photo-6311876740296412591-y.jpg" onerror="this.src='https://via.placeholder.com/200x140?text=SCANNING'">
+                </div>
+                <div class="side-ring-meters">
+                    <div class="side-ring"><svg viewBox="0 0 50 50"><circle class="sr-bg" cx="25" cy="25" r="20"></circle><circle class="sr-val" id="ringSrv1" cx="25" cy="25" r="20" style="stroke: #00f3ff;"></circle></svg><div class="sr-txt">SRV 1</div></div>
+                    <div class="side-ring"><svg viewBox="0 0 50 50"><circle class="sr-bg" cx="25" cy="25" r="20"></circle><circle class="sr-val" id="ringSrv2" cx="25" cy="25" r="20" style="stroke: #bf00ff;"></circle></svg><div class="sr-txt">SRV 2</div></div>
+                    <div class="side-ring"><svg viewBox="0 0 50 50"><circle class="sr-bg" cx="25" cy="25" r="20"></circle><circle class="sr-val" id="ringSrv3" cx="25" cy="25" r="20" style="stroke: #ff0055;"></circle></svg><div class="sr-txt">SRV 3</div></div>
+                </div>
+            </div>
+
+            <div class="section-title"><i class="fas fa-mobile-alt"></i> Select Platform</div>
+            <div class="iphone-slider" id="gameSlider"></div>
+
+            <div class="section-title" style="margin-top:5px;"><i class="fas fa-clock"></i> Select Timer</div>
+            <div class="timer-circle-grid">
+                <div class="timer-circle active" onclick="setTimer(30, this)"><i class="fas fa-bolt"></i><span>30 Sec</span></div>
+                <div class="timer-circle" onclick="setTimer(60, this)"><i class="fas fa-stopwatch"></i><span>1 Min</span></div>
+                <div class="timer-circle" onclick="setTimer(180, this)"><i class="fas fa-hourglass-half"></i><span>3 Min</span></div>
+                <div class="timer-circle" onclick="setTimer(300, this)"><i class="fas fa-hourglass-end"></i><span>5 Min</span></div>
+            </div>
+
+            <div class="section-title"><i class="fas fa-server"></i> Select Server Strategy</div>
+            <div class="server-status-box" id="srvStatusBox">
+                <div class="srv-glow-line" id="srvGlowLine" style="display:none;"></div>
+                <div class="srv-title">CURRENT CONNECTION STATUS</div>
+                <div class="srv-code-text disc" id="homeSrvText">[ <span>NOT CONNECTED!</span> ]</div>
+            </div>
+
+            <div class="fetch-box">
+                <div class="fetch-period">PERIOD: <span id="periodNum">WAITING...</span></div>
+                <div class="fetch-timer" id="timer">00:00</div>
+                <div class="fetch-status" id="resultText">CONNECT AI PRO FIRST</div>
+            </div>
+
+            <div class="balls-grid-container" id="ballsGrid">
+                <div class="balls-row">
+                    <div class="ball-item" id="ball-0"><div class="ball-bg-glow"></div>0</div>
+                    <div class="ball-item" id="ball-1"><div class="ball-bg-glow"></div>1</div>
+                    <div class="ball-item" id="ball-2"><div class="ball-bg-glow"></div>2</div>
+                    <div class="ball-item" id="ball-3"><div class="ball-bg-glow"></div>3</div>
+                    <div class="ball-item" id="ball-4"><div class="ball-bg-glow"></div>4</div>
+                </div>
+                <div class="balls-row">
+                    <div class="ball-item" id="ball-5"><div class="ball-bg-glow"></div>5</div>
+                    <div class="ball-item" id="ball-6"><div class="ball-bg-glow"></div>6</div>
+                    <div class="ball-item" id="ball-7"><div class="ball-bg-glow"></div>7</div>
+                    <div class="ball-item" id="ball-8"><div class="ball-bg-glow"></div>8</div>
+                    <div class="ball-item" id="ball-9"><div class="ball-bg-glow"></div>9</div>
+                </div>
+            </div>
+            
+            <div class="footer-graph">
+                <div class="graph-title">LIVE ACCURACY MONITOR</div>
+                <div class="live-bars" id="liveBars"></div>
+            </div>
+        </div>
+
+        <div id="tabGame" class="tab-content">
+            <div class="game-frame-container">
+                <div style="text-align:center; color:var(--gold); font-size:10px; margin-bottom:5px; z-index: 5; position: relative;">AI HIGHLIGHTER ACTIVE</div>
+                <div id="aiOverlay" class="ai-overlay"></div>
+                <iframe id="gameFrame" src="about:blank"></iframe>
+                <div id="gameAiBtn" class="game-ai-float" onclick="unlockAiTab()">AI PRO</div>
+            </div>
+        </div>
+
+        <div id="tabHistory" class="tab-content">
+            <h3 style="text-align:center; color:#fff; font-family:'Rajdhani';">LIVE PREDICTION LOGS</h3>
+            <p style="text-align:center; font-size:10px; color:var(--theme-color); margin-bottom: 10px;">LEVEL 1, 2 & 3 SAFE SYSTEM</p>
+            <table class="history-table">
+                <thead><tr><th>PERIOD</th><th>BOT PRED</th><th>REAL RESULT</th><th>STATUS</th></tr></thead>
+                <tbody id="historyTable"></tbody>
+            </table>
+        </div>
+
+        <div id="tabAI" class="tab-content">
+            <div class="ai-meters-row">
+                <div class="ai-meter"><svg viewBox="0 0 100 100"><circle class="ai-bg-circ" cx="50" cy="50" r="40"></circle><circle class="ai-val-circ" cx="50" cy="50" r="40" style="stroke: #00ff41; stroke-dashoffset: 40;"></circle></svg><div class="ai-meter-txt" id="ringWTxt">85%</div><div class="ai-meter-label">WIN PATT.</div></div>
+                <div class="ai-meter"><svg viewBox="0 0 100 100"><circle class="ai-bg-circ" cx="50" cy="50" r="40"></circle><circle class="ai-val-circ" cx="50" cy="50" r="40" style="stroke: #ff0055; stroke-dashoffset: 170;"></circle></svg><div class="ai-meter-txt" id="ringLTxt">15%</div><div class="ai-meter-label">LOSS PATT.</div></div>
+                <div class="ai-meter"><svg viewBox="0 0 100 100"><circle class="ai-bg-circ" cx="50" cy="50" r="40"></circle><circle class="ai-val-circ" cx="50" cy="50" r="40" style="stroke: #bf00ff; stroke-dashoffset: 20;"></circle></svg><div class="ai-meter-txt" id="ringSTxt">95%</div><div class="ai-meter-label">STABLE</div></div>
+            </div>
+
+            <div class="ss-action-panel">
+                <div class="ss-current-box">
+                    <div class="ss-cur-left" id="actCurrPeriod">---</div>
+                    <div class="ss-cur-right"><div class="ss-cur-lbl">Current...</div><div class="ss-cur-val" id="actPending">Pending...</div></div>
+                </div>
+                <div class="ss-prev-box">
+                    <div class="ss-prev-left" id="actPrevPeriod">---</div>
+                    <div class="ss-prev-right"><div class="ss-prev-lbl">Previous...</div><div class="ss-prev-val" id="actPrevResult">---</div></div>
+                </div>
+            </div>
+
+            <div class="matrix-container">
+                <div class="matrix-title">ADVANCED TREND MATRIX</div>
+                <div class="dot-grid" id="matrixGrid"></div>
+            </div>
+
+            <div class="calendar-panel" id="calendarPanel">
+                <div class="cal-day" id="day-1">MON</div><div class="cal-day" id="day-2">TUE</div><div class="cal-day" id="day-3">WED</div><div class="cal-day" id="day-4">THU</div><div class="cal-day" id="day-5">FRI</div><div class="cal-day" id="day-6">SAT</div><div class="cal-day" id="day-0">SUN</div>
+            </div>
+
+            <div class="ai-section-title">SERVER STRATEGY SELECTION</div>
+            <div class="srv-grid">
+                <div class="srv-btn active" id="btnRao1" onclick="selMain('RAO 1', this)">RAO 1<br><span style="font-size:9px; color:#aaa;">(Direct Base)</span></div>
+                <div class="srv-btn" onclick="selMain('RAO 2', this)">RAO 2<br><span style="font-size:9px; color:#aaa;">(Reverse Mkt)</span></div>
+                <div class="srv-btn" onclick="selMain('RAO 3', this)">RAO 3<br><span style="font-size:9px; color:#aaa;">(L-3 Safe)</span></div>
+            </div>
+            <div id="srvConnectMsg" class="srv-status">[ NOT CONNECTED ]</div>
+            
+            <button id="aiConnectBtn" class="btn-ai-connect" onclick="connectAiServer()">CONNECT AI ENGINE</button>
+            <button id="sessionBtn" class="btn-start-session" onclick="toggleSession()"><i class="fas fa-power-off"></i> START SESSION</button>
+
+            <div class="ai-section-title" style="margin-top:20px;">TELEGRAM SETUP</div>
+            <input type="text" id="botToken" class="inp-key" placeholder="BOT TOKEN">
+            <input type="text" id="chatId" class="inp-key" placeholder="YOUR CHAT ID">
+            <input type="text" id="inpChannel" class="inp-key" placeholder="CHANNEL LINK">
+
+            <div class="ai-section-title" style="margin-top:20px;">ADD-ONS & TOGGLES</div>
+            <div class="switch-row"><span>TELEGRAM BOT</span><label class="switch"><input type="checkbox" id="tgSwitch"><span class="slider"></span></label></div>
+            <div class="switch-row"><span>INCLUDE HASHTAG</span><label class="switch"><input type="checkbox" id="tagSwitch" onchange="tog('inpTags')"><span class="slider"></span></label></div>
+            <input type="text" id="inpTags" class="inp-mini" placeholder="Enter Hashtags">
+            <div class="switch-row"><span>ADD GIFT CODE</span><label class="switch"><input type="checkbox" id="giftSwitch" onchange="tog('inpGift')"><span class="slider"></span></label></div>
+            <input type="text" id="inpGift" class="inp-mini" placeholder="Enter Gift Code">
+            <div class="switch-row"><span>INCLUDE INVITE LINK</span><label class="switch"><input type="checkbox" id="invSwitch" onchange="tog('inpInvite')"><span class="slider"></span></label></div>
+            <input type="text" id="inpInvite" class="inp-mini" placeholder="Enter Invite Link">
+            <div class="switch-row"><span>SHARE CHANNEL BTN</span><label class="switch"><input type="checkbox" id="chSwitch"><span class="slider"></span></label></div>
+            <div class="switch-row"><span>SURE SHOT (DELETE LOSS)</span><label class="switch"><input type="checkbox" id="sureShotSwitch" checked><span class="slider"></span></label></div>
+            <div class="switch-row"><span>PLAY SOUND ALERT</span><label class="switch"><input type="checkbox" id="soundSwitch" checked><span class="slider"></span></label></div>
+            <div class="switch-row"><span>RGB BORDER LIGHT</span><label class="switch"><input type="checkbox" id="rgbSwitch" onchange="togRGB()"><span class="slider"></span></label></div>
+            <button class="btn-ai-connect" onclick="saveCfg()" style="background:#222; border-color:#222; color:#fff; font-size:14px; padding:10px; margin-top:10px;">SAVE CONFIG</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav" id="btmNav">
+        <div class="nav-item active" onclick="switchTab('tabHome', this)"><i class="fas fa-home"></i><span>HOME</span></div>
+        <div class="nav-item" onclick="switchTab('tabGame', this)"><i class="fas fa-gamepad"></i><span>GAME</span></div>
+        <div class="nav-item" onclick="checkAiTab(this)"><i class="fas fa-microchip"></i><span>AI PRO</span></div>
+        <div class="nav-item" onclick="switchTab('tabHistory', this)"><i class="fas fa-history"></i><span>HISTORY</span></div>
+    </div>
+
+    <div id="toast"></div>
+    <audio id="alertSound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
+
+    <script>
+        const GAMES = [
+            { name: "DAMAN GAME", img: "https://i.ibb.co/GYHZtT0/image.png", link: "https://damanworld.top/#/register?invitationCode=613534185076" },
+            { name: "JALWA CLUB", img: "https://i.ibb.co/pBvkLtvP/image.png", link: "https://jalwaclub3.com/#/register?invitationCode=562647318340" },
+            { name: "OK WIN", img: "https://i.ibb.co/HprPYttK/image.png", link: "https://okwinn.work/register?invitationCode=842642415271" },
+            { name: "91 CLUB", img: "https://i.ibb.co/TB9Bk7TT/image.png", link: "https://www.surat91.com/#/register?invitationCode=4641517434173" },
+            { name: "51 GAME", img: "https://i.ibb.co/7LNLcTK/image.png", link: "https://www.51gamek.com/#/register?invitationCode=26261103525" },
+            { name: "RAJA PARTY", img: "https://i.ibb.co/8n5tQ6Zs/image.png", link: "https://www.rajaparty8.com/#/register?invitationCode=83851128686" },
+            { name: "SIKKIM GAME", img: "https://i.ibb.co/GYHZtT0/image.png", link: "https://www.1sikkim.com/#/register?invitationCode=21155363278" },
+            { name: "GOA GAME", img: "https://i.ibb.co/pBvkLtvP/image.png", link: "http://www.goaok.link/#/register?invitationCode=81344380756" },
+            { name: "LOTTERY 7", img: "https://i.ibb.co/HprPYttK/image.png", link: "https://www.lottery7kk.com/#/register?invitationCode=364622670994" }
+        ];
+
+        const ASSETS = {
+            START: 'https://ibb.co/zHxjqLCz', STOP: 'https://ibb.co/MyyzwtHp',
+            IMG_30: 'https://ibb.co/0yZvp9Yq', IMG_60: 'https://ibb.co/NgGhgDKL', SKIP: 'https://ibb.co/Yj541fN',
+            WIN_FIRST: "CAACAgUAAxkBAAEDEC9pCVVRUpjzq5JD0Xds7EfRQje15wACuxMAAtZgYVZaFxCncOnSvh4E",
+            WIN_MIDDLE: [ "CAACAgUAAxkBAAEDEDdpCXsDjwGlCNvT7EOetSaVSckH-AACvhIAAl2EYFYRGskC145Gkh4E", "CAACAgUAAxkBAAEDED9pCXtTSZDN91Ecw6ubgma2zRye4AACdRUAAixnYVYGODMz3GAhmh4E", "CAACAgUAAxkBAAEDEEJpCXtukJIYrmQjt6gQdbEwgXR9IAACWBkAAmvFoFeR0XR5LtIzCR4E" ],
+            WIN_LAST: "CAACAgUAAxkBAAEDEGJpC0WiOqBSFlY2k_zURD0W1XUpEQAC0xMAAtJlYVZ8CDYuQ-4m-B4E",
+            LOSS: [ "CAACAgQAAxkBAAEDEGxpC0W_HrRKrdK-RPSd89tA9OJ-CgACUA8AAmWGgFDT7olWti1e2h4E", "CAACAgUAAxkBAAEDEUNpELLwfisH8fMa8RAH481Ui_6pcwACoBoAAnliGVS2SjPOJAYbeR4E" ],
+            DIRECT_HIT: "CAACAgUAAxkBAAEQoNxpoHkG_25CfnXUVSyaDd1l9PFWtAACPgIAApEMUFWQZaH6VMhVjzoE"
+        };
+
+        const API_URLS = { 
+            30: 'https://draw.ar-lottery01.com/WinGo/WinGo_30S/GetHistoryIssuePage.json', 
+            60: 'https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json', 
+            180: 'https://draw.ar-lottery01.com/WinGo/WinGo_3M/GetHistoryIssuePage.json', 
+            300: 'https://draw.ar-lottery01.com/WinGo/WinGo_5M/GetHistoryIssuePage.json' 
+        };
+
+        const SERVERS = ['RAO 1', 'RAO 2', 'RAO 3'];
+
+        let app = { 
+            active: false, timer: 30, lastPeriod: null, prediction: null, 
+            currentGame: GAMES[0].name, mainServer: SERVERS[0], srvIndex: 0, 
+            lossStreak: 0, botHistory: [], lastMsgId: null, deviceId: ''
+        };
+        
+        let liveHistoryData = [];
+        let isAiUnlocked = false;
+        let isAiServerConnected = false;
+        
+        window.onload = () => { 
+            initDeviceSecurity(); 
+            loadProfileData(); 
+            createWeather(); 
+            loadCfg(); 
+            initSlider(); 
+            initDotMatrix(); 
+            highlightCurrentDay();
+            
+            selMain('RAO 1', document.getElementById('btnRao1'));
+            
+            setInterval(loop, 1000); 
+            setInterval(updateRealGraphs, 2500); 
+            setInterval(checkSecurityLoop, 1000);
+            
+            setTimeout(() => { 
+                if(document.getElementById('lockScreen').style.display === 'none') { 
+                    document.getElementById('supportPopup').style.display='block'; 
+                } 
+            }, 3000);
+        };
+
+        function loadProfileData() {
+            let n = localStorage.getItem('rao_prof_name') || 'Rao Sahab';
+            let p = localStorage.getItem('rao_prof_pic') || 'https://i.ibb.co/LDtsvwHt/photo-6314602691614674283-x.jpg';
+            document.getElementById('userName').innerText = n; 
+            document.getElementById('userAvatar').src = p;
+        }
+
+        function openProfileModal() { 
+            document.getElementById('profNameInput').value = localStorage.getItem('rao_prof_name') || ''; 
+            document.getElementById('profileModal').style.display = 'flex'; 
+        }
+
+        function saveProfileData() {
+            let n = document.getElementById('profNameInput').value.trim(); 
+            if(n) localStorage.setItem('rao_prof_name', n);
+            
+            let fileInput = document.getElementById('profPicInput');
+            if(fileInput.files && fileInput.files[0]) {
+                let reader = new FileReader(); 
+                reader.onload = function(e) { 
+                    localStorage.setItem('rao_prof_pic', e.target.result); 
+                    loadProfileData(); 
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else { 
+                loadProfileData(); 
+            }
+            document.getElementById('profileModal').style.display = 'none'; 
+            showToast("PROFILE UPDATED!");
+        }
+
+        function highlightCurrentDay() { 
+            let day = new Date().getDay(); 
+            document.getElementById('day-' + day).classList.add('active'); 
+        }
+
+        function initDeviceSecurity() {
+            let dId = localStorage.getItem('rao_device_id');
+            if(!dId) { 
+                dId = 'RAO-' + Math.random().toString(36).substr(2, 4).toUpperCase() + '-' + Math.random().toString(36).substr(2, 4).toUpperCase(); 
+                localStorage.setItem('rao_device_id', dId); 
+            }
+            app.deviceId = dId; 
+            document.getElementById('lsDeviceId').innerText = dId;
+            
+            let expiry = localStorage.getItem('rao_key_expiry');
+            if(expiry && Date.now() < parseInt(expiry)) { 
+                document.getElementById('lockScreen').style.display = 'none'; 
+            } else { 
+                document.getElementById('lockScreen').style.display = 'flex'; 
+            }
+        }
+
+        function copyDeviceId() { 
+            navigator.clipboard.writeText(app.deviceId); 
+            showToast("DEVICE ID COPIED"); 
+        }
+
+        function unlockBot() {
+            const key = document.getElementById('lsKeyInput').value.trim(); 
+            if(!key) { alert("Enter Access Key!"); return; }
+            try {
+                const decoded = atob(key); 
+                const parts = decoded.split(':');
+                if(parts.length === 3 && parts[2] === "RAOSAHAB_SECRET") {
+                    if(parts[0] !== app.deviceId) { alert("❌ INVALID DEVICE"); return; }
+                    if(Date.now() > parseInt(parts[1])) { alert("❌ KEY EXPIRED!"); return; }
+                    localStorage.setItem('rao_key_expiry', parts[1]); 
+                    document.getElementById('lockScreen').style.display = 'none'; 
+                    showToast("✅ SYSTEM UNLOCKED"); 
+                    setTimeout(() => { document.getElementById('supportPopup').style.display='block'; }, 1000);
+                } else { alert("❌ INVALID KEY"); }
+            } catch(e) { alert("❌ CORRUPTED KEY"); }
+        }
+
+        function checkSecurityLoop() {
+            let expiry = localStorage.getItem('rao_key_expiry');
+            if(!expiry || Date.now() > parseInt(expiry)) { 
+                if(document.getElementById('lockScreen').style.display === 'none') { 
+                    document.getElementById('lockScreen').style.display = 'flex'; 
+                    app.active = false; 
+                    alert("⚠️ YOUR ACCESS KEY HAS EXPIRED!"); 
+                } 
+            }
+        }
+
+        function checkAiTab(el) { 
+            if(!isAiUnlocked) { alert("GAME TAB mein jakar 'AI PRO' button ko click karein!"); } 
+            else { switchTab('tabAI', el); } 
+        }
+
+        function unlockAiTab() { 
+            isAiUnlocked = true; 
+            document.getElementById('gameAiBtn').style.display = 'none'; 
+            switchTab('tabAI', document.querySelectorAll('.nav-item')[2]); 
+            showToast("AI PRO UNLOCKED"); 
+        }
+
+        function connectAiServer() {
+            document.getElementById('aiConnectBtn').style.display = 'none'; 
+            document.getElementById('srvConnectMsg').innerText = `[ CONNECTED TO ${app.mainServer} ]`;
+            document.getElementById('srvConnectMsg').style.color = "var(--theme-color)"; 
+            document.getElementById('srvStatusBox').classList.add('connected');
+            document.getElementById('srvGlowLine').style.display = 'block'; 
+            document.getElementById('homeSrvText').className = 'srv-code-text';
+            document.getElementById('homeSrvText').innerHTML = `[ <span>CONNECTED : GOD MODE</span> ]`; 
+            isAiServerConnected = true; 
+            showToast("AI SERVER CONNECTED");
+        }
+
+        function selMain(srvName, el) { 
+            if (!el) return;
+            document.querySelectorAll('.srv-btn').forEach(b => b.classList.remove('active')); 
+            el.classList.add('active'); 
+            app.mainServer = srvName; 
+            
+            if(isAiServerConnected) { 
+                document.getElementById('srvConnectMsg').innerText = `[ RE-ROUTING TO ${app.mainServer}... ]`; 
+                setTimeout(() => { document.getElementById('srvConnectMsg').innerText = `[ CONNECTED TO ${app.mainServer} ]`; }, 1500); 
+            }
+        }
+
+        function createWeather() { 
+            const wc = document.getElementById('weather-container'); 
+            for(let i=0; i<100; i++) { 
+                let drop = document.createElement('div'); 
+                drop.className = 'rain-drop'; 
+                drop.style.left = Math.random() * 100 + 'vw'; 
+                drop.style.animationDuration = Math.random() * 1 + 0.5 + 's'; 
+                drop.style.animationDelay = Math.random() * 2 + 's'; 
+                wc.appendChild(drop); 
+            } 
+            setInterval(() => { 
+                if(Math.random() > 0.7) { 
+                    const lf = document.getElementById('lightning-flash'); 
+                    lf.classList.add('strike'); 
+                    setTimeout(() => lf.classList.remove('strike'), 500); 
+                } 
+            }, 4000); 
+        }
+
+        function initSlider() { 
+            document.getElementById('gameSlider').innerHTML = GAMES.map((g,i) => `
+                <div class="iphone-card ${i===0?'active':''}" onclick="loadGame(${i}, this)">
+                    <div class="iphone-notch"></div>
+                    <img src="${g.img}" class="iphone-img">
+                    <div class="iphone-name">${g.name}</div>
+                </div>`).join(''); 
+        }
+
+        function initDotMatrix() { 
+            let html = ''; 
+            for(let i=0; i<35; i++) { html += `<div class="dot" id="dot-${i}"></div>`; } 
+            document.getElementById('matrixGrid').innerHTML = html; 
+        }
+
+        function loadGame(i, el) { 
+            document.querySelectorAll('.iphone-card').forEach(c => c.classList.remove('active')); 
+            el.classList.add('active'); 
+            app.currentGame = GAMES[i].name; 
+            document.getElementById('gameFrame').src = GAMES[i].link; 
+            showToast(`Connecting to ${GAMES[i].name}...`); 
+        }
+
+        function setTimer(s, el) { 
+            app.timer = s; 
+            document.querySelectorAll('.timer-circle').forEach(b => b.classList.remove('active')); 
+            el.classList.add('active'); 
+        }
+
+        async function updateRealGraphs() {
+            if(document.getElementById('lockScreen').style.display !== 'none') return;
+            try { 
+                const res = await fetch(`${API_URLS[app.timer]}?ts=${Date.now()}`); 
+                const data = (await res.json()).data.list; 
+                if(!data) return;
+                
+                liveHistoryData = data.map(x => parseInt(x.number)); 
+                
+                document.querySelectorAll('.ball-item').forEach(b=>b.classList.remove('active')); 
+                document.getElementById('ball-'+liveHistoryData[0]).classList.add('active'); 
+                updateFooterBars(liveHistoryData.slice(0, 30));
+
+                let winP = Math.floor(Math.random() * 15 + 80); 
+                let lossP = 100 - winP;
+                document.getElementById('winAccTxt').innerText = winP + '%'; 
+                document.getElementById('lossAccTxt').innerText = lossP + '%';
+                
+                let r1 = Math.floor(Math.random()*40+20); 
+                let r2 = Math.floor(Math.random()*40+40);
+                document.getElementById('pathWinWave').setAttribute('d', `M0,50 Q25,${r1} 50,${r2} T100,30 L100,100 L0,100 Z`); 
+                document.getElementById('pathLossWave').setAttribute('d', `M0,30 Q25,${r2} 50,${r1} T100,60 L100,100 L0,100 Z`);
+
+                let srv1 = Math.floor(Math.random()*80 + 20); 
+                let srv2 = Math.floor(Math.random()*80 + 20); 
+                let srv3 = Math.floor(Math.random()*80 + 20);
+                document.getElementById('ringSrv1').style.strokeDashoffset = 125 - (125 * srv1 / 100); 
+                document.getElementById('ringSrv2').style.strokeDashoffset = 125 - (125 * srv2 / 100); 
+                document.getElementById('ringSrv3').style.strokeDashoffset = 125 - (125 * srv3 / 100);
+
+                let ringW = Math.floor(Math.random() * 15 + 80); 
+                let ringL = 100 - ringW;
+                document.getElementById('ringWTxt').innerText = ringW + '%'; 
+                document.getElementById('ringLTxt').innerText = ringL + '%'; 
+                document.getElementById('ringSTxt').innerText = Math.floor(Math.random()*10 + 90) + '%'; 
+
+                const pIssue = data[0].issueNumber; 
+                document.getElementById('actPrevPeriod').innerText = pIssue.slice(-5);
+                const prevN = parseInt(data[0].number); 
+                document.getElementById('actPrevResult').innerText = prevN >= 5 ? 'BIG' : 'SMALL';
+                
+                const nIssue = (BigInt(pIssue) + 1n).toString().slice(-5); 
+                document.getElementById('actCurrPeriod').innerText = nIssue.slice(-3);
+
+                for(let i=0; i<35; i++) {
+                    let d = document.getElementById(`dot-${i}`); 
+                    if(!d) continue;
+                    if(i < liveHistoryData.length) { 
+                        d.className = liveHistoryData[i] >= 5 ? 'dot big' : 'dot small'; 
+                    } else { 
+                        d.className = 'dot'; 
+                    }
+                }
+            } catch(e){}
+        }
+
+        function updateFooterBars(arr) { 
+            const c = document.getElementById('liveBars'); 
+            c.innerHTML=''; 
+            arr.forEach(num => { 
+                const b = document.createElement('div'); 
+                b.className = 'l-bar'; 
+                b.style.height = (num * 4 + 10) + 'px'; 
+                b.style.backgroundColor = num >= 5 ? 'var(--theme-color)' : 'var(--red)'; 
+                c.appendChild(b); 
+            }); 
+        }
+
+        // =========================================================
+        // REAL BOT ENGINE (Bot Math + Server Strategy Switch)
+        // =========================================================
+        function calculateNextPrediction(history, currentPeriod, serverName, lossStreak) {
+            if (!history || history.length < 5) { 
+                return { bs: "WAIT", color: "WAIT", target: "?" }; 
+            }
+
+            // --- 1. CORE BOT CALCULATION (Pure 50/50 Balanced Base) ---
+            let N1 = history[0], N2 = history[1], N3 = history[2];
+            let p_last = parseInt(currentPeriod.slice(-1));
+            let p_full = parseInt(currentPeriod.slice(-4)); 
+            let sum5 = history.slice(0, 5).reduce((a, b) => a + b, 0);
+
+            let bigVotes = 0, smallVotes = 0;
+
+            // Matrix Engine Layer
+            for (let i = 1; i <= 150; i++) {
+                let calc;
+                if (i <= 50) calc = ((N1 * i) + (history[i % history.length] * N2) + p_last) % 10;
+                else if (i <= 100) calc = ((p_full * i) + sum5 + N3) % 10;
+                else calc = (Math.pow(N1, 2) + history[i % history.length] + i) % 10;
+
+                if (calc >= 5) bigVotes++; else smallVotes++;
+            }
+
+            // Rao Core Engine Layer (Fixed from previous bias)
+            let add = N1 + N2;
+            let sub = Math.abs(N1 - N2);
+            let mul = N1 * N2;
+            
+            if (((add * N1) + p_last) % 10 >= 5) bigVotes += 15; else smallVotes += 15;
+            if (((mul - sub) + p_last) % 10 >= 5) bigVotes += 15; else smallVotes += 15;
+
+            // Base Unbiased Prediction
+            let baseBS = bigVotes > smallVotes ? "BIG" : "SMALL";
+
+            // --- 2. SERVER STRATEGY APPLICATION ---
+            let finalBS = baseBS;
+
+            if (serverName === 'RAO 1') {
+                // RAO 1: Direct Follow logic
+                finalBS = baseBS;
+            } 
+            else if (serverName === 'RAO 2') {
+                // RAO 2: Reverse Logic (When market is against calculation)
+                finalBS = baseBS === "BIG" ? "SMALL" : "BIG";
+            } 
+            else if (serverName === 'RAO 3') {
+                // RAO 3: Level Safe Logic (Adapts automatically)
+                if (lossStreak === 0) finalBS = baseBS;
+                else if (lossStreak === 1) finalBS = baseBS === "BIG" ? "SMALL" : "BIG"; // Level 2 Reverse
+                else if (lossStreak >= 2) finalBS = baseBS; // Level 3 Follow
+            }
+
+            // --- 3. SURE SHOT LEVEL 3 OVERRIDE (Only active on final level if enabled) ---
+            if (document.getElementById('sureShotSwitch').checked && lossStreak === 2) {
+                 finalBS = history[0] >= 5 ? "SMALL" : "BIG"; // Last resort trend reverse
+            }
+
+            // Color & Target Num
+            let finalColor = finalBS === "BIG" ? "RED" : "GREEN";
+            let targetNumber = finalBS === "BIG" ? (Math.random() > 0.5 ? "8" : "7") : (Math.random() > 0.5 ? "2" : "3");
+
+            return { bs: finalBS, color: finalColor, target: targetNumber };
+        }
+
+        async function processPrediction() {
+            if(liveHistoryData.length < 5) return;
+            const res = await fetch(`${API_URLS[app.timer]}?ts=${Date.now()}`); 
+            const list = (await res.json()).data.list; 
+            const nextIssue = (BigInt(list[0].issueNumber) + 1n).toString();
+            
+            if(app.lastPeriod === nextIssue) return; 
+            app.lastPeriod = nextIssue;
+            
+            // Fetch Prediction using the SELECTED SERVER logic
+            const predData = calculateNextPrediction(liveHistoryData, nextIssue, app.mainServer, app.lossStreak);
+            let pred = predData.bs; 
+            
+            app.prediction = { period: nextIssue, value: pred, target: predData.target, status: 'PENDING' };
+            app.botHistory.unshift({ 
+                period: nextIssue, 
+                botPred: pred, 
+                botCol: predData.color, 
+                realResult: '?', 
+                realCol: '', 
+                status: 'WAIT' 
+            }); 
+            
+            updateHistoryTable();
+
+            document.getElementById('periodNum').innerText = nextIssue.slice(-5);
+            let disp = pred; 
+            const rt = document.getElementById('resultText'); 
+            
+            if(!isAiServerConnected) { 
+                rt.innerText = "CONNECT AI PRO FIRST"; 
+                rt.className = "fetch-status"; 
+                rt.style.color = "var(--red)"; 
+            } else {
+                rt.innerText = "FETCHING RESULT..."; 
+                rt.className = "fetch-status"; 
+                rt.style.color = "var(--gold)";
+                
+                setTimeout(() => {
+                    rt.innerText = `RESULT : ${disp}`;
+                    if(pred === "BIG" || disp === "GREEN") { 
+                        rt.className = "fetch-status big"; 
+                        rt.style.color = "var(--theme-color)"; 
+                    } else { 
+                        rt.className = "fetch-status small"; 
+                        rt.style.color = "var(--red)"; 
+                    }
+                    document.getElementById('actPending').innerText = disp;
+                }, 1500); 
+            }
+
+            if(document.getElementById('soundSwitch').checked && isAiServerConnected) { 
+                document.getElementById('alertSound').play(); 
+            }
+            
+            if(app.active && isAiServerConnected && document.getElementById('tgSwitch').checked) {
+                let tgPred = disp; 
+                sendTgMessage(nextIssue, tgPred, predData.target); 
+            }
+        }
+
+        async function checkResult() {
+            if(!app.prediction || app.prediction.status !== 'PENDING') return;
+            const res = await fetch(`${API_URLS[app.timer]}?ts=${Date.now()}`); 
+            const list = (await res.json()).data.list; 
+            const r = list.find(x => x.issueNumber === app.prediction.period);
+            
+            if(r) {
+                const actualNum = parseInt(r.number);
+                const actualBS = actualNum >= 5 ? "BIG" : "SMALL"; 
+                let win = actualBS === app.prediction.value;
+
+                if(!win) { 
+                    app.lossStreak++;
+                    let currentLossLevel = app.lossStreak; 
+                    
+                    app.prediction.status = 'LOSS'; 
+                    app.botHistory[0].realResult = actualBS + ` (${actualNum})`; 
+
+                    if(currentLossLevel >= 3) {
+                         app.botHistory[0].status = `LEVEL 3 LOSS 💔`;
+                    } else {
+                         app.botHistory[0].status = `LEVEL ${currentLossLevel} LOSS 💔`; 
+                    }
+                    
+                    // --- UNDER 3 LEVEL RECOVER : Reset to 0 after Level 3 loss ---
+                    if (app.lossStreak >= 3) {
+                        app.lossStreak = 0; 
+                    }
+                    
+                    updateHistoryTable(); 
+                    showPopup(false, actualNum); 
+                    
+                    if(app.active && isAiServerConnected && document.getElementById('tgSwitch').checked) {
+                        if(document.getElementById('sureShotSwitch').checked && app.lastMsgId) { 
+                            deleteTgMessage(app.lastMsgId); 
+                        } else { 
+                            sendStickerRaw(ASSETS.LOSS[Math.floor(Math.random() * ASSETS.LOSS.length)]); 
+                        }
+                    }
+                } else {
+                    app.lossStreak = 0;
+                    app.prediction.status = 'WIN'; 
+                    app.botHistory[0].realResult = actualBS + ` (${actualNum})`; 
+                    
+                    if(actualNum.toString() === app.prediction.target.toString()) {
+                        app.botHistory[0].status = 'DIRECT HIT 🎯';
+                        updateHistoryTable(); 
+                        showPopup(true, actualNum); 
+                        
+                        if(app.active && isAiServerConnected && document.getElementById('tgSwitch').checked) {
+                            await sendStickerRaw(ASSETS.DIRECT_HIT);
+                            await new Promise(resolve => setTimeout(resolve, 1000));
+                            await sendWinSequence(); 
+                        }
+                    } else {
+                        app.botHistory[0].status = 'WIN 🏆'; 
+                        updateHistoryTable(); 
+                        showPopup(true, actualNum); 
+                        if(app.active && isAiServerConnected && document.getElementById('tgSwitch').checked) {
+                            await sendWinSequence(); 
+                        }
+                    }
+                }
+            }
+        }
+        
+        function updateHistoryTable() { 
+            const t = document.getElementById('historyTable'); 
+            t.innerHTML = app.botHistory.map(h => { 
+                const color = h.status.includes('WIN') || h.status.includes('HIT') ? 'var(--theme-color)' : (h.status.includes('LOSS') ? 'var(--red)' : '#fff'); 
+                return `
+                    <tr>
+                        <td>${h.period.slice(-5)}</td>
+                        <td style="color:${h.botPred==='BIG'?'var(--theme-color)':'var(--red)'}">${h.botPred}</td>
+                        <td style="color:${h.realResult.includes('BIG')?'var(--theme-color)':'var(--red)'}">${h.realResult}</td>
+                        <td style="color:${color}; font-weight:900;">${h.status}</td>
+                    </tr>`; 
+            }).join(''); 
+        }
+
+        function showPopup(win, num) { 
+            const p = document.getElementById('resultPopup'); 
+            const t = document.getElementById('popTitle'); 
+            const n = document.getElementById('popNum'); 
+            
+            p.className = win ? 'win-mode' : 'loss-mode'; 
+            t.innerText = win ? 'WIN 🏆' : 'LOSS 💔'; 
+            n.innerText = num; 
+            p.style.display = 'flex'; 
+            
+            setTimeout(() => { p.style.display = 'none'; }, 3000); 
+        }
+
+        async function loop() {
+            if(document.getElementById('lockScreen').style.display !== 'none') return;
+            const rem = app.timer - (new Date().getSeconds() % app.timer); 
+            document.getElementById('timer').innerText = `00:${rem < 10 ? '0'+rem : rem}`;
+            
+            if(app.active) { 
+                if(rem === (app.timer == 30 ? 29 : 59)) processPrediction(); 
+                if(rem <= 5) checkResult(); 
+            }
+        }
+
+        async function sendWinSequence() { 
+            const t = document.getElementById('botToken').value; 
+            const c = document.getElementById('chatId').value; 
+            if(!t || !c) return;
+            
+            await sendStickerRaw(ASSETS.WIN_FIRST); 
+            await new Promise(r => setTimeout(r, 1000)); 
+            await sendStickerRaw(ASSETS.WIN_MIDDLE[Math.floor(Math.random() * ASSETS.WIN_MIDDLE.length)]); 
+            await new Promise(r => setTimeout(r, 1000)); 
+            await sendStickerRaw(ASSETS.WIN_LAST);
+        }
+
+        async function sendTgMessage(period, pred, target) {
+            const t = document.getElementById('botToken').value; 
+            const c = document.getElementById('chatId').value; 
+            if(!t || !c) return;
+            
+            const imgUrl = (app.timer === 30) ? ASSETS.IMG_30 : ASSETS.IMG_60;
+            
+            let levelStr = app.lossStreak === 0 ? "⚡ Level 1" : (app.lossStreak === 1 ? "🔥 Level 2 (Recovery)" : "💥 Level 3 (Final Safe)"); 
+            const acc = app.lossStreak === 0 ? "95%" : "100%";
+
+            let msg = `█▓▒░✧✦ WΣLCØMΣ ✦✧░▒▓█\n╔═◈═◈═◈═◈═◈═╗\n📅 Date : ${new Date().toLocaleDateString()}\n🎮 Game : ${app.currentGame}\n⏱️ Wingo : ${app.timer/60}Min\n🔢 Period : ${period.slice(-4)}\n╚═◈═◈═◈═◈═◈═╝\n\n🎯 𝗥𝗘𝗦𝗨𝗟𝗧 𝗜𝗡𝗙𝗢\n🟢/🔴 Big/Small : ➨ *${pred}*\n🎯 Target Num : ➨ ${target}\n\n⚙️ Server : ${app.mainServer}\n📈 Accuracy : ${acc}\n🛡️ Plan : ${levelStr}\n`;
+            
+            if(document.getElementById('tagSwitch').checked) msg += `\n${document.getElementById('inpTags').value}`;
+            if(document.getElementById('giftSwitch').checked) msg += `\n🎁 *Code:* ${document.getElementById('inpGift').value}`;
+            if(document.getElementById('invSwitch').checked) msg += `\n🔗 *Link:* ${document.getElementById('inpInvite').value}`;
+            msg += `\n──────✦✧✦──────\n✦ Share Channel ✦\nREPRESENTED BY 亗ᎡᎪØ  ꕶᎪᎻᎪᏴ  𒆜×͜×`;
+
+            let markup = {}; 
+            if(document.getElementById('chSwitch').checked && document.getElementById('inpChannel').value) { 
+                markup = { inline_keyboard: [[{ text: "🚀 JOIN OFFICIAL CHANNEL", url: document.getElementById('inpChannel').value }]] }; 
+            }
+
+            try { 
+                const url = `https://api.telegram.org/bot${t}/sendPhoto`;
+                let fd = new URLSearchParams();
+                fd.append('chat_id', c); 
+                fd.append('photo', imgUrl); 
+                fd.append('caption', msg); 
+                fd.append('parse_mode', 'Markdown');
+                
+                if(markup.inline_keyboard) {
+                    fd.append('reply_markup', JSON.stringify(markup));
+                }
+                
+                const r1 = await fetch(url, { method: 'POST', body: fd }); 
+                const r1d = await r1.json(); 
+                
+                if(!r1d.ok) throw new Error("Photo send failed");
+                app.lastMsgId = r1d.result.message_id; 
+                
+            } catch(e){ 
+                console.log("TG Photo Error! Sending TEXT FALLBACK instead.", e); 
+                try {
+                    const txtUrl = `https://api.telegram.org/bot${t}/sendMessage`;
+                    let txtFd = new URLSearchParams();
+                    txtFd.append('chat_id', c); 
+                    txtFd.append('text', msg); 
+                    txtFd.append('parse_mode', 'Markdown');
+                    if(markup.inline_keyboard) txtFd.append('reply_markup', JSON.stringify(markup));
+                    
+                    const r2 = await fetch(txtUrl, { method: 'POST', body: txtFd });
+                    const r2d = await r2.json();
+                    if(r2d.ok) app.lastMsgId = r2d.result.message_id;
+                } catch(err) {}
+            }
+        }
+        
+        async function sendStickerRaw(id) { 
+            const t = document.getElementById('botToken').value; 
+            const c = document.getElementById('chatId').value; 
+            if(t && c) { 
+                try { 
+                    await fetch(`https://api.telegram.org/bot${t}/sendSticker?chat_id=${c}&sticker=${id}`); 
+                } catch(e){} 
+            } 
+        }
+
+        async function sendTgPhoto(caption, url) { 
+            const t = document.getElementById('botToken').value; 
+            const c = document.getElementById('chatId').value; 
+            if(t && c) { 
+                try { 
+                    await fetch(`https://api.telegram.org/bot${t}/sendPhoto?chat_id=${c}&photo=${url}&caption=${encodeURIComponent(caption)}&parse_mode=Markdown`); 
+                } catch(e){} 
+            } 
+        }
+
+        async function deleteTgMessage(msgId) { 
+            const t = document.getElementById('botToken').value; 
+            const c = document.getElementById('chatId').value; 
+            if(t && c && msgId) { 
+                try { 
+                    await fetch(`https://api.telegram.org/bot${t}/deleteMessage?chat_id=${c}&message_id=${msgId}`); 
+                } catch(e){} 
+            } 
+        }
+
+        function toggleSession() { 
+            if(!isAiServerConnected) { alert("CONNECT AI SERVER FIRST!"); return; }
+            app.active = !app.active; 
+            const btn = document.getElementById('sessionBtn');
+            
+            if(app.active) {
+                btn.innerHTML = '<i class="fas fa-stop"></i> STOP SESSION'; 
+                btn.classList.add('running');
+                if(document.getElementById('tgSwitch').checked) { 
+                    sendTgPhoto("🚀 *SESSION STARTED* \n\nGood Luck!", ASSETS.START); 
+                }
+            } else {
+                btn.innerHTML = '<i class="fas fa-power-off"></i> START SESSION'; 
+                btn.classList.remove('running');
+                if(document.getElementById('tgSwitch').checked) { 
+                    sendTgPhoto("🛑 *SESSION STOPPED*", ASSETS.STOP); 
+                    if(app.lastMsgId) { deleteTgMessage(app.lastMsgId); } 
+                } 
+                app.lossStreak = 0; 
+            }
+        }
+
+        function tog(id) { 
+            const e = document.getElementById(id); 
+            e.style.display = e.style.display === 'block' ? 'none' : 'block'; 
+        }
+
+        function togRGB() { 
+            const on = document.getElementById('rgbSwitch').checked; 
+            const el = document.getElementById('rgbBorder'); 
+            if(on) el.classList.add('active'); 
+            else el.classList.remove('active'); 
+        }
+
+        function switchTab(t, el) { 
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active')); 
+            document.getElementById(t).classList.add('active'); 
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); 
+            el.classList.add('active'); 
+        }
+
+        function showToast(m) { 
+            const t = document.getElementById('toast'); 
+            t.innerText = m; 
+            t.className = "show"; 
+            setTimeout(() => { t.className = ""; }, 3000); 
+        }
+        
+        function saveCfg() { 
+            localStorage.setItem('cfg_v25', JSON.stringify({ 
+                token: document.getElementById('botToken').value, 
+                chat: document.getElementById('chatId').value, 
+                rgb: document.getElementById('rgbSwitch').checked, 
+                sureShot: document.getElementById('sureShotSwitch').checked, 
+                sound: document.getElementById('soundSwitch').checked, 
+                tags: document.getElementById('inpTags').value, 
+                gift: document.getElementById('inpGift').value, 
+                invite: document.getElementById('inpInvite').value, 
+                chLink: document.getElementById('inpChannel').value, 
+                chTog: document.getElementById('chSwitch').checked, 
+                reverse: document.getElementById('reverseSwitch').checked 
+            })); 
+            showToast("CONFIG SAVED"); 
+        }
+        
+        function loadCfg() { 
+            const c = JSON.parse(localStorage.getItem('cfg_v25')||'{}'); 
+            if(c.token) document.getElementById('botToken').value = c.token; 
+            if(c.chat) document.getElementById('chatId').value = c.chat; 
+            if(c.tags) document.getElementById('inpTags').value = c.tags; 
+            if(c.gift) document.getElementById('inpGift').value = c.gift; 
+            if(c.invite) document.getElementById('inpInvite').value = c.invite; 
+            if(c.chLink) document.getElementById('inpChannel').value = c.chLink;
+            if(c.chTog) document.getElementById('chSwitch').checked = true; 
+            if(c.rgb) { document.getElementById('rgbSwitch').checked = true; togRGB(); }
+            if(c.sureShot !== undefined) document.getElementById('sureShotSwitch').checked = c.sureShot; 
+            if(c.sound) document.getElementById('soundSwitch').checked = true;
+            if(c.reverse) document.getElementById('reverseSwitch').checked = true;
+        }
+    </script>
+</body>
+</html>
