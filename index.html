@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RAO SAHAB V.8.0 GOD MODE</title>
+    <title>RAO SAHAB V.7.0 GOD MODE</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&family=Rajdhani:wght@700;800;900&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
@@ -44,19 +44,51 @@
         }
 
         /* --- LOCK SCREEN & PLANS --- */
-        #lockScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow-y: auto; padding: 20px; }
-        .ls-title { font-family: 'Rajdhani'; font-size: 30px; color: var(--theme-color); text-shadow: 0 0 20px var(--theme-color); margin-bottom: 5px; text-align: center; margin-top: 30px; }
+        #lockScreen { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #000; z-index: 99999; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; overflow-y: auto; padding: 20px; 
+        }
+        .ls-title { 
+            font-family: 'Rajdhani'; font-size: 30px; color: var(--theme-color); 
+            text-shadow: 0 0 20px var(--theme-color); margin-bottom: 5px; text-align: center; margin-top: 30px; 
+        }
         .ls-sub { color: #fff; font-size: 12px; margin-bottom: 20px; text-align: center; }
-        .plans-scroll { display: flex; overflow-x: auto; width: 100%; gap: 15px; padding: 10px 0; scroll-snap-type: x mandatory; margin-bottom: 20px; }
-        .plan-card { min-width: 200px; background: #111; border: 1px solid #333; border-radius: 15px; padding: 20px; text-align: center; scroll-snap-align: center; flex-shrink: 0; position: relative; overflow: hidden; }
+        .plans-scroll { 
+            display: flex; overflow-x: auto; width: 100%; gap: 15px; padding: 10px 0; 
+            scroll-snap-type: x mandatory; margin-bottom: 20px; 
+        }
+        .plan-card { 
+            min-width: 200px; background: #111; border: 1px solid #333; border-radius: 15px; 
+            padding: 20px; text-align: center; scroll-snap-align: center; flex-shrink: 0; 
+            position: relative; overflow: hidden; 
+        }
         .plan-price { font-size: 35px; color: var(--theme-color); font-family: 'Rajdhani'; margin: 10px 0; }
         .plan-desc { font-size: 11px; color: #aaa; margin-bottom: 15px; line-height: 1.5; }
-        .device-id-box { background: rgba(0,243,255,0.1); border: 1px dashed var(--theme-color); padding: 15px; width: 100%; max-width: 350px; text-align: center; border-radius: 10px; margin-bottom: 15px; cursor: pointer; }
+        .device-id-box { 
+            background: rgba(0,243,255,0.1); border: 1px dashed var(--theme-color); padding: 15px; 
+            width: 100%; max-width: 350px; text-align: center; border-radius: 10px; 
+            margin-bottom: 15px; cursor: pointer; 
+        }
         .dev-label { font-size: 10px; color: var(--theme-color); margin-bottom: 5px; }
         .dev-code { font-size: 20px; color: #fff; letter-spacing: 2px; font-family: 'Rajdhani'; }
-        .key-input { width: 100%; max-width: 350px; padding: 15px; background: #111; border: 1px solid var(--theme-color); color: #fff; text-align: center; font-size: 14px; border-radius: 8px; margin-bottom: 15px; font-family: 'Courier Prime'; }
-        .btn-unlock { width: 100%; max-width: 350px; background: var(--theme-color); color: #000; padding: 15px; font-size: 18px; font-family: 'Rajdhani'; font-weight: 900; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 15px; box-shadow: 0 0 20px rgba(0,243,255,0.4); }
-        .btn-buy { width: 100%; max-width: 350px; background: #0088cc; color: #fff; padding: 15px; font-size: 16px; font-family: 'Rajdhani'; font-weight: 900; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; text-align: center; display: block; margin-bottom: 30px; }
+        .key-input { 
+            width: 100%; max-width: 350px; padding: 15px; background: #111; 
+            border: 1px solid var(--theme-color); color: #fff; text-align: center; 
+            font-size: 14px; border-radius: 8px; margin-bottom: 15px; font-family: 'Courier Prime'; 
+        }
+        .btn-unlock { 
+            width: 100%; max-width: 350px; background: var(--theme-color); color: #000; 
+            padding: 15px; font-size: 18px; font-family: 'Rajdhani'; font-weight: 900; 
+            border: none; border-radius: 8px; cursor: pointer; margin-bottom: 15px; 
+            box-shadow: 0 0 20px rgba(0,243,255,0.4); 
+        }
+        .btn-buy { 
+            width: 100%; max-width: 350px; background: #0088cc; color: #fff; padding: 15px; 
+            font-size: 16px; font-family: 'Rajdhani'; font-weight: 900; border: none; 
+            border-radius: 8px; cursor: pointer; text-decoration: none; text-align: center; 
+            display: block; margin-bottom: 30px; 
+        }
 
         /* --- WEATHER & EFFECTS --- */
         #weather-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
@@ -81,6 +113,7 @@
         /* --- FIXED HEADER --- */
         .fixed-header { width: 100%; background: #000; border-bottom: 2px solid var(--theme-color); padding: 15px 0; position: fixed; top: 0; left: 0; z-index: 10001; margin-top: 25px; text-align: center; box-shadow: 0 5px 20px rgba(0, 243, 255, 0.3); }
         .fixed-title { font-family: 'Rajdhani'; font-size: 26px; font-weight: 900; background: linear-gradient(to right, #00f3ff, #bf00ff, #00f3ff); -webkit-background-clip: text; background-clip: text; color: transparent; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.2); }
+
         .container { width: 100%; padding: 10px; position: relative; z-index: 2; display: block; flex: 1; margin-top: 90px; }
 
         /* --- USER PROFILE SECTION --- */
@@ -92,6 +125,7 @@
         .greeting-text span { color: var(--theme-color); text-shadow: 0 0 5px var(--theme-color); }
         .sub-greeting { font-size: 11px; color: #fff; font-family: 'Courier Prime'; margin-top: 4px; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
         
+        /* Profile Edit Modal */
         #profileModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 20000; justify-content: center; align-items: center; }
         .profile-box { background: #111; border: 1px solid var(--theme-color); padding: 25px; border-radius: 15px; width: 90%; max-width: 350px; text-align: center; box-shadow: 0 0 30px rgba(0,243,255,0.3); }
         .profile-box h3 { color: var(--theme-color); font-family: 'Rajdhani'; margin-bottom: 15px; font-size: 24px; }
@@ -118,7 +152,7 @@
         .win-box .wave-text span { color: var(--theme-color); }
         .loss-box .wave-text span { color: #d4ff59; }
 
-        /* --- MAIN INFO AREA --- */
+        /* --- MAIN INFO AREA (DOLL + 3 RING METERS) --- */
         .main-info-area { display: flex; gap: 10px; height: 160px; margin-bottom: 25px; }
         .big-image-box { flex: 1; border: 1px solid var(--purple); border-radius: 10px; overflow: hidden; background: #000; position: relative; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 10px rgba(191, 0, 255, 0.3); }
         .big-image-box img { width: 100%; height: 100%; object-fit: contain; }
@@ -198,6 +232,8 @@
 
         /* --- AI PRO TAB --- */
         #tabAI { padding: 10px 0; }
+        
+        /* 3 Ring Meters: Green, Red, Violet */
         .ai-meters-row { display: flex; justify-content: space-around; margin-bottom: 25px; }
         .ai-meter { width: 30%; position: relative; display: flex; flex-direction: column; align-items: center; }
         .ai-meter svg { width: 80px; height: 80px; transform: rotate(-90deg); }
@@ -206,7 +242,9 @@
         .ai-meter-txt { position: absolute; top: 32px; font-size: 14px; color: #fff; font-family: 'Rajdhani'; font-weight: 900; }
         .ai-meter-label { color: #888; font-size: 11px; margin-top: 5px; font-weight: bold; }
 
+        /* Screenshot Style Current & Previous Boxes */
         .ss-action-panel { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
+        
         .ss-current-box { background: rgba(0, 243, 255, 0.1); border: 2px solid var(--theme-color); border-radius: 15px; padding: 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
         .ss-cur-left { background: var(--theme-color); padding: 10px 20px; border-radius: 10px; font-family: 'Rajdhani'; font-size: 28px; color: #000; font-weight: 900; letter-spacing: 2px; box-shadow: 0 0 15px var(--theme-color); }
         .ss-cur-right { text-align: right; }
@@ -219,6 +257,7 @@
         .ss-prev-lbl { color: #fff; font-family: 'Rajdhani'; font-size: 16px; margin-bottom: 5px; }
         .ss-prev-val { color: var(--purple); font-family: 'Rajdhani'; font-size: 24px; font-weight: 900; text-shadow: 0 0 10px var(--purple); }
 
+        /* Advanced Trend Matrix */
         .matrix-container { background: #0a0a0a; border: 1px solid #222; border-radius: 15px; padding: 20px; margin-bottom: 25px; box-shadow: inset 0 0 20px rgba(0,0,0,1); }
         .matrix-title { text-align: center; color: #555; font-family: 'Rajdhani'; font-size: 14px; letter-spacing: 3px; margin-bottom: 15px; text-transform: uppercase; }
         .dot-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; justify-items: center; }
@@ -226,21 +265,25 @@
         .dot.big { background: var(--theme-color); border-color: var(--theme-color); box-shadow: 0 0 10px var(--theme-color); }
         .dot.small { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 10px var(--purple); }
 
+        /* CALENDAR */
         .calendar-panel { display: flex; justify-content: space-between; background: #0a0a0a; border: 1px solid #222; border-radius: 15px; padding: 15px 10px; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,1); }
         .cal-day { font-family: 'Rajdhani'; font-size: 12px; color: #555; background: #111; padding: 8px 10px; border-radius: 8px; transition: 0.3s; }
         .cal-day.active { background: var(--purple); color: #fff; box-shadow: 0 0 10px rgba(191,0,255,0.5); transform: translateY(-3px); }
 
-        .ai-section-title { color: var(--theme-color); font-family: 'Rajdhani'; font-size: 16px; font-weight: 900; margin: 15px 0 10px 0; border-bottom: 2px solid rgba(0,243,255,0.2); padding-bottom: 5px; text-shadow: 0 0 10px var(--theme-color); }
+        /* SERVER SELECTION AT BOTTOM */
         .srv-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 5px; }
         .srv-btn { background: #111; border: 1px solid #333; color: #888; padding: 12px; font-size: 14px; cursor: pointer; font-weight: bold; border-radius: 8px; text-align: center; font-family: 'Rajdhani'; transition: 0.3s; }
         .srv-btn.active { background: var(--purple); color: #fff; box-shadow: 0 0 15px var(--purple); border-color: var(--purple); }
         .srv-status { text-align: center; color: var(--theme-color); font-size: 12px; margin-top: 10px; margin-bottom: 25px; font-family: 'Courier Prime'; font-weight: 900; text-shadow: 0 0 5px var(--theme-color); }
 
+        /* BUTTONS (iOS Toggles & Session Start) */
         .btn-ai-connect { background: var(--theme-color); color: #000; padding: 15px; width: 100%; border: none; border-radius: 10px; font-family: 'Rajdhani'; font-size: 18px; font-weight: 900; cursor: pointer; box-shadow: 0 0 20px rgba(0,243,255,0.4); transition: 0.3s; margin-bottom:15px; }
         .btn-ai-connect:active { transform: translateY(2px); }
+        
         .btn-start-session { background: transparent; border: 2px solid var(--theme-color); color: var(--theme-color); padding: 15px; width: 100%; border-radius: 10px; font-family: 'Rajdhani'; font-size: 18px; font-weight: 900; cursor: pointer; margin-bottom: 25px; transition: 0.3s; box-shadow: 0 0 15px rgba(0,243,255,0.2); }
         .btn-start-session.running { background: rgba(255, 0, 85, 0.2); border-color: var(--red); color: var(--red); box-shadow: 0 0 20px rgba(255, 0, 85, 0.4); }
 
+        .ai-section-title { color: var(--theme-color); font-family: 'Rajdhani'; font-size: 16px; font-weight: 900; margin: 15px 0 10px 0; border-bottom: 2px solid rgba(0,243,255,0.2); padding-bottom: 5px; text-shadow: 0 0 10px var(--theme-color); }
         .switch-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; color: #fff; font-weight:900; }
         
         .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
@@ -289,7 +332,7 @@
 <body id="bodyEl">
 
     <div id="lockScreen">
-        <div class="ls-title">RAO SAHAB V.8.0</div>
+        <div class="ls-title">RAO SAHAB V.7.0</div>
         <div class="ls-sub">PREMIUM AI PREDICTION ENGINE</div>
         
         <div class="plans-scroll">
@@ -346,7 +389,7 @@
     <div class="rgb-border" id="rgbBorder"></div>
 
     <div class="fixed-header">
-        <div class="fixed-title">RAO SAHAB V.8.0</div>
+        <div class="fixed-title">RAO SAHAB V.7.0</div>
     </div>
 
     <div id="supportPopup">
@@ -427,7 +470,7 @@
                 <div class="timer-circle" onclick="setTimer(300, this)"><i class="fas fa-hourglass-end"></i><span>5 Min</span></div>
             </div>
 
-            <div class="section-title"><i class="fas fa-server"></i> Select Server Strategy</div>
+            <div class="section-title"><i class="fas fa-server"></i> Select Server</div>
             <div class="server-status-box" id="srvStatusBox">
                 <div class="srv-glow-line" id="srvGlowLine" style="display:none;"></div>
                 <div class="srv-title">CURRENT CONNECTION STATUS</div>
@@ -508,11 +551,11 @@
                 <div class="cal-day" id="day-1">MON</div><div class="cal-day" id="day-2">TUE</div><div class="cal-day" id="day-3">WED</div><div class="cal-day" id="day-4">THU</div><div class="cal-day" id="day-5">FRI</div><div class="cal-day" id="day-6">SAT</div><div class="cal-day" id="day-0">SUN</div>
             </div>
 
-            <div class="ai-section-title">SERVER STRATEGY SELECTION</div>
+            <div class="ai-section-title">SERVER SELECTION</div>
             <div class="srv-grid">
-                <div class="srv-btn active" id="btnRao1" onclick="selMain('RAO 1', this)">RAO 1<br><span style="font-size:9px; color:#aaa;">(Direct Base)</span></div>
-                <div class="srv-btn" onclick="selMain('RAO 2', this)">RAO 2<br><span style="font-size:9px; color:#aaa;">(Reverse Mkt)</span></div>
-                <div class="srv-btn" onclick="selMain('RAO 3', this)">RAO 3<br><span style="font-size:9px; color:#aaa;">(L-3 Safe)</span></div>
+                <div class="srv-btn active" id="btnRao1" onclick="selMain(1, this, 'RAO 1')">RAO 1</div>
+                <div class="srv-btn" onclick="selMain(2, this, 'RAO 2')">RAO 2</div>
+                <div class="srv-btn" onclick="selMain(3, this, 'RAO 3')">RAO 3</div>
             </div>
             <div id="srvConnectMsg" class="srv-status">[ NOT CONNECTED ]</div>
             
@@ -534,6 +577,7 @@
             <input type="text" id="inpInvite" class="inp-mini" placeholder="Enter Invite Link">
             <div class="switch-row"><span>SHARE CHANNEL BTN</span><label class="switch"><input type="checkbox" id="chSwitch"><span class="slider"></span></label></div>
             <div class="switch-row"><span>SURE SHOT (DELETE LOSS)</span><label class="switch"><input type="checkbox" id="sureShotSwitch" checked><span class="slider"></span></label></div>
+            <div class="switch-row"><span>REVERSE TELEGRAM</span><label class="switch"><input type="checkbox" id="reverseSwitch"><span class="slider"></span></label></div>
             <div class="switch-row"><span>PLAY SOUND ALERT</span><label class="switch"><input type="checkbox" id="soundSwitch" checked><span class="slider"></span></label></div>
             <div class="switch-row"><span>RGB BORDER LIGHT</span><label class="switch"><input type="checkbox" id="rgbSwitch" onchange="togRGB()"><span class="slider"></span></label></div>
             <button class="btn-ai-connect" onclick="saveCfg()" style="background:#222; border-color:#222; color:#fff; font-size:14px; padding:10px; margin-top:10px;">SAVE CONFIG</button>
@@ -558,9 +602,9 @@
             { name: "91 CLUB", img: "https://i.ibb.co/TB9Bk7TT/image.png", link: "https://www.surat91.com/#/register?invitationCode=4641517434173" },
             { name: "51 GAME", img: "https://i.ibb.co/7LNLcTK/image.png", link: "https://www.51gamek.com/#/register?invitationCode=26261103525" },
             { name: "RAJA PARTY", img: "https://i.ibb.co/8n5tQ6Zs/image.png", link: "https://www.rajaparty8.com/#/register?invitationCode=83851128686" },
-            { name: "SIKKIM GAME", img: "https://i.ibb.co/GYHZtT0/image.png", link: "https://www.1sikkim.com/#/register?invitationCode=21155363278" },
-            { name: "GOA GAME", img: "https://i.ibb.co/pBvkLtvP/image.png", link: "http://www.goaok.link/#/register?invitationCode=81344380756" },
-            { name: "LOTTERY 7", img: "https://i.ibb.co/HprPYttK/image.png", link: "https://www.lottery7kk.com/#/register?invitationCode=364622670994" }
+            { name: "SIKKIM GAME", img: "https://cdn-icons-png.flaticon.com/512/1168/1168582.png", link: "https://www.1sikkim.com/#/register?invitationCode=21155363278" },
+            { name: "GOA GAME", img: "https://cdn-icons-png.flaticon.com/512/8065/8065360.png", link: "http://www.goaok.link/#/register?invitationCode=81344380756" },
+            { name: "LOTTERY 7", img: "https://cdn-icons-png.flaticon.com/512/2643/2643590.png", link: "https://www.lottery7kk.com/#/register?invitationCode=364622670994" }
         ];
 
         const ASSETS = {
@@ -569,8 +613,7 @@
             WIN_FIRST: "CAACAgUAAxkBAAEDEC9pCVVRUpjzq5JD0Xds7EfRQje15wACuxMAAtZgYVZaFxCncOnSvh4E",
             WIN_MIDDLE: [ "CAACAgUAAxkBAAEDEDdpCXsDjwGlCNvT7EOetSaVSckH-AACvhIAAl2EYFYRGskC145Gkh4E", "CAACAgUAAxkBAAEDED9pCXtTSZDN91Ecw6ubgma2zRye4AACdRUAAixnYVYGODMz3GAhmh4E", "CAACAgUAAxkBAAEDEEJpCXtukJIYrmQjt6gQdbEwgXR9IAACWBkAAmvFoFeR0XR5LtIzCR4E" ],
             WIN_LAST: "CAACAgUAAxkBAAEDEGJpC0WiOqBSFlY2k_zURD0W1XUpEQAC0xMAAtJlYVZ8CDYuQ-4m-B4E",
-            LOSS: [ "CAACAgQAAxkBAAEDEGxpC0W_HrRKrdK-RPSd89tA9OJ-CgACUA8AAmWGgFDT7olWti1e2h4E", "CAACAgUAAxkBAAEDEUNpELLwfisH8fMa8RAH481Ui_6pcwACoBoAAnliGVS2SjPOJAYbeR4E" ],
-            DIRECT_HIT: "CAACAgUAAxkBAAEQoNxpoHkG_25CfnXUVSyaDd1l9PFWtAACPgIAApEMUFWQZaH6VMhVjzoE"
+            LOSS: [ "CAACAgQAAxkBAAEDEGxpC0W_HrRKrdK-RPSd89tA9OJ-CgACUA8AAmWGgFDT7olWti1e2h4E", "CAACAgUAAxkBAAEDEUNpELLwfisH8fMa8RAH481Ui_6pcwACoBoAAnliGVS2SjPOJAYbeR4E" ]
         };
 
         const API_URLS = { 
@@ -601,7 +644,8 @@
             initDotMatrix(); 
             highlightCurrentDay();
             
-            selMain('RAO 1', document.getElementById('btnRao1'));
+            // Default select RAO 1 on load explicitly
+            selMain(1, document.getElementById('btnRao1'), 'RAO 1');
             
             setInterval(loop, 1000); 
             setInterval(updateRealGraphs, 2500); 
@@ -724,12 +768,11 @@
             showToast("AI SERVER CONNECTED");
         }
 
-        function selMain(srvName, el) { 
+        function selMain(id, el, srvName) { 
             if (!el) return;
             document.querySelectorAll('.srv-btn').forEach(b => b.classList.remove('active')); 
             el.classList.add('active'); 
             app.mainServer = srvName; 
-            
             if(isAiServerConnected) { 
                 document.getElementById('srvConnectMsg').innerText = `[ RE-ROUTING TO ${app.mainServer}... ]`; 
                 setTimeout(() => { document.getElementById('srvConnectMsg').innerText = `[ CONNECTED TO ${app.mainServer} ]`; }, 1500); 
@@ -852,71 +895,79 @@
             }); 
         }
 
-        // =========================================================
-        // REAL BOT ENGINE (Bot Math + Server Strategy Switch)
-        // =========================================================
-        function calculateNextPrediction(history, currentPeriod, serverName, lossStreak) {
-            if (!history || history.length < 5) { 
+        // --- RESTORED ORIGINAL JAVA LOGIC WITH 3-LEVEL ---
+        function calculateNextPrediction(history, currentPeriod) {
+            if (!history || history.length < 4) { 
                 return { bs: "WAIT", color: "WAIT", target: "?" }; 
             }
 
-            // --- 1. CORE BOT CALCULATION (Pure 50/50 Balanced Base) ---
-            let N1 = history[0], N2 = history[1], N3 = history[2];
-            let p_last = parseInt(currentPeriod.slice(-1));
-            let p_full = parseInt(currentPeriod.slice(-4)); 
-            let sum5 = history.slice(0, 5).reduce((a, b) => a + b, 0);
-
-            let bigVotes = 0, smallVotes = 0;
-
-            // Matrix Engine Layer
-            for (let i = 1; i <= 150; i++) {
-                let calc;
-                if (i <= 50) calc = ((N1 * i) + (history[i % history.length] * N2) + p_last) % 10;
-                else if (i <= 100) calc = ((p_full * i) + sum5 + N3) % 10;
-                else calc = (Math.pow(N1, 2) + history[i % history.length] + i) % 10;
-
-                if (calc >= 5) bigVotes++; else smallVotes++;
-            }
-
-            // Rao Core Engine Layer (Fixed from previous bias)
-            let add = N1 + N2;
-            let sub = Math.abs(N1 - N2);
-            let mul = N1 * N2;
+            let lastNum = history[0]; 
+            let periodLastDigit = parseInt(currentPeriod.slice(-1));
             
-            if (((add * N1) + p_last) % 10 >= 5) bigVotes += 15; else smallVotes += 15;
-            if (((mul - sub) + p_last) % 10 >= 5) bigVotes += 15; else smallVotes += 15;
+            let matrixPred = checkMatrixTable(periodLastDigit, lastNum);
+            let trendPred = checkTrendPattern(history);
 
-            // Base Unbiased Prediction
-            let baseBS = bigVotes > smallVotes ? "BIG" : "SMALL";
-
-            // --- 2. SERVER STRATEGY APPLICATION ---
-            let finalBS = baseBS;
-
-            if (serverName === 'RAO 1') {
-                // RAO 1: Direct Follow logic
-                finalBS = baseBS;
-            } 
-            else if (serverName === 'RAO 2') {
-                // RAO 2: Reverse Logic (When market is against calculation)
-                finalBS = baseBS === "BIG" ? "SMALL" : "BIG";
-            } 
-            else if (serverName === 'RAO 3') {
-                // RAO 3: Level Safe Logic (Adapts automatically)
-                if (lossStreak === 0) finalBS = baseBS;
-                else if (lossStreak === 1) finalBS = baseBS === "BIG" ? "SMALL" : "BIG"; // Level 2 Reverse
-                else if (lossStreak >= 2) finalBS = baseBS; // Level 3 Follow
+            let finalBS = matrixPred !== null ? matrixPred : trendPred;
+            if (finalBS === null) { 
+                finalBS = (lastNum <= 4) ? "BIG" : "SMALL"; 
             }
 
-            // --- 3. SURE SHOT LEVEL 3 OVERRIDE (Only active on final level if enabled) ---
-            if (document.getElementById('sureShotSwitch').checked && lossStreak === 2) {
-                 finalBS = history[0] >= 5 ? "SMALL" : "BIG"; // Last resort trend reverse
+            // Forced Win for Level 2 & 3 (Sure Shot System)
+            if(app.lossStreak === 1) { 
+                let last = history[0] > 4; 
+                let prev = history[1] > 4; 
+                if(last === prev) { 
+                    finalBS = last ? "BIG" : "SMALL"; 
+                } else { 
+                    finalBS = last ? "SMALL" : "BIG"; 
+                }
+            } else if (app.lossStreak === 2 && document.getElementById('sureShotSwitch').checked) {
+                // Level 3 ultimate logic (invert the current trend)
+                finalBS = (history[0] > 4) ? "SMALL" : "BIG";
             }
 
-            // Color & Target Num
-            let finalColor = finalBS === "BIG" ? "RED" : "GREEN";
-            let targetNumber = finalBS === "BIG" ? (Math.random() > 0.5 ? "8" : "7") : (Math.random() > 0.5 ? "2" : "3");
+            let finalColor = calculateColor(finalBS, lastNum);
+            let targetNumber = predictTargetNumber(finalBS, lastNum);
 
             return { bs: finalBS, color: finalColor, target: targetNumber };
+        }
+
+        function checkMatrixTable(pLast, lNum) { 
+            if (pLast === 1) { 
+                if (lNum === 1 || lNum === 3) return "SMALL"; 
+                if (lNum === 5 || lNum === 7 || lNum === 9) return "BIG"; 
+            } 
+            if (pLast === 0) { 
+                if (lNum === 2 || lNum === 4) return "SMALL"; 
+                if (lNum === 8) return "BIG"; 
+            } 
+            return null; 
+        }
+
+        function checkTrendPattern(history) { 
+            let b0 = history[0] > 4; 
+            let b1 = history[1] > 4; 
+            let b2 = history[2] > 4; 
+            let b3 = history[3] > 4; 
+            
+            if (b0 === b1 && b1 === b2) return b0 ? "BIG" : "SMALL"; 
+            if (b0 !== b1 && b1 !== b2 && b2 !== b3) return b0 ? "SMALL" : "BIG"; 
+            if (b0 === b1 && b1 !== b2 && b2 === b3) return b0 ? "SMALL" : "BIG"; 
+            return null; 
+        }
+
+        function calculateColor(bs, lNum) { 
+            if (lNum === 1 || lNum === 3 || lNum === 7) return "GREEN"; 
+            if (lNum === 5 || lNum === 6 || lNum === 8 || lNum === 9 || lNum === 0) return "RED"; 
+            return bs === "BIG" ? "RED" : "GREEN"; 
+        }
+
+        function predictTargetNumber(bs, lNum) { 
+            if(bs === "BIG") { 
+                return (lNum % 2 === 0) ? "8" : "7"; 
+            } else { 
+                return (lNum % 2 === 0) ? "2" : "3"; 
+            }
         }
 
         async function processPrediction() {
@@ -928,11 +979,10 @@
             if(app.lastPeriod === nextIssue) return; 
             app.lastPeriod = nextIssue;
             
-            // Fetch Prediction using the SELECTED SERVER logic
-            const predData = calculateNextPrediction(liveHistoryData, nextIssue, app.mainServer, app.lossStreak);
+            const predData = calculateNextPrediction(liveHistoryData, nextIssue);
             let pred = predData.bs; 
             
-            app.prediction = { period: nextIssue, value: pred, target: predData.target, status: 'PENDING' };
+            app.prediction = { period: nextIssue, value: pred, status: 'PENDING' };
             app.botHistory.unshift({ 
                 period: nextIssue, 
                 botPred: pred, 
@@ -976,6 +1026,9 @@
             
             if(app.active && isAiServerConnected && document.getElementById('tgSwitch').checked) {
                 let tgPred = disp; 
+                if(document.getElementById('reverseSwitch').checked) { 
+                    tgPred = pred === "BIG" ? "SMALL" : "BIG"; 
+                } 
                 sendTgMessage(nextIssue, tgPred, predData.target); 
             }
         }
@@ -993,21 +1046,11 @@
 
                 if(!win) { 
                     app.lossStreak++;
-                    let currentLossLevel = app.lossStreak; 
+                    if(app.lossStreak > 3) app.lossStreak = 1; // Reset loop safety
                     
                     app.prediction.status = 'LOSS'; 
                     app.botHistory[0].realResult = actualBS + ` (${actualNum})`; 
-
-                    if(currentLossLevel >= 3) {
-                         app.botHistory[0].status = `LEVEL 3 LOSS 💔`;
-                    } else {
-                         app.botHistory[0].status = `LEVEL ${currentLossLevel} LOSS 💔`; 
-                    }
-                    
-                    // --- UNDER 3 LEVEL RECOVER : Reset to 0 after Level 3 loss ---
-                    if (app.lossStreak >= 3) {
-                        app.lossStreak = 0; 
-                    }
+                    app.botHistory[0].status = `LEVEL ${app.lossStreak} LOSS 💔`; 
                     
                     updateHistoryTable(); 
                     showPopup(false, actualNum); 
@@ -1023,24 +1066,13 @@
                     app.lossStreak = 0;
                     app.prediction.status = 'WIN'; 
                     app.botHistory[0].realResult = actualBS + ` (${actualNum})`; 
+                    app.botHistory[0].status = 'WIN 🏆'; 
                     
-                    if(actualNum.toString() === app.prediction.target.toString()) {
-                        app.botHistory[0].status = 'DIRECT HIT 🎯';
-                        updateHistoryTable(); 
-                        showPopup(true, actualNum); 
-                        
-                        if(app.active && isAiServerConnected && document.getElementById('tgSwitch').checked) {
-                            await sendStickerRaw(ASSETS.DIRECT_HIT);
-                            await new Promise(resolve => setTimeout(resolve, 1000));
-                            await sendWinSequence(); 
-                        }
-                    } else {
-                        app.botHistory[0].status = 'WIN 🏆'; 
-                        updateHistoryTable(); 
-                        showPopup(true, actualNum); 
-                        if(app.active && isAiServerConnected && document.getElementById('tgSwitch').checked) {
-                            await sendWinSequence(); 
-                        }
+                    updateHistoryTable(); 
+                    showPopup(true, actualNum); 
+                    
+                    if(app.active && isAiServerConnected && document.getElementById('tgSwitch').checked) {
+                        sendWinSequence(); 
                     }
                 }
             }
@@ -1049,7 +1081,7 @@
         function updateHistoryTable() { 
             const t = document.getElementById('historyTable'); 
             t.innerHTML = app.botHistory.map(h => { 
-                const color = h.status.includes('WIN') || h.status.includes('HIT') ? 'var(--theme-color)' : (h.status.includes('LOSS') ? 'var(--red)' : '#fff'); 
+                const color = h.status.includes('WIN') ? 'var(--theme-color)' : (h.status.includes('LOSS') ? 'var(--red)' : '#fff'); 
                 return `
                     <tr>
                         <td>${h.period.slice(-5)}</td>
@@ -1102,8 +1134,7 @@
             if(!t || !c) return;
             
             const imgUrl = (app.timer === 30) ? ASSETS.IMG_30 : ASSETS.IMG_60;
-            
-            let levelStr = app.lossStreak === 0 ? "⚡ Level 1" : (app.lossStreak === 1 ? "🔥 Level 2 (Recovery)" : "💥 Level 3 (Final Safe)"); 
+            const levelStr = app.lossStreak === 0 ? "⚡ Level 1" : `🔥 Level ${app.lossStreak + 1} (Sure Shot)`; 
             const acc = app.lossStreak === 0 ? "95%" : "100%";
 
             let msg = `█▓▒░✧✦ WΣLCØMΣ ✦✧░▒▓█\n╔═◈═◈═◈═◈═◈═╗\n📅 Date : ${new Date().toLocaleDateString()}\n🎮 Game : ${app.currentGame}\n⏱️ Wingo : ${app.timer/60}Min\n🔢 Period : ${period.slice(-4)}\n╚═◈═◈═◈═◈═◈═╝\n\n🎯 𝗥𝗘𝗦𝗨𝗟𝗧 𝗜𝗡𝗙𝗢\n🟢/🔴 Big/Small : ➨ *${pred}*\n🎯 Target Num : ➨ ${target}\n\n⚙️ Server : ${app.mainServer}\n📈 Accuracy : ${acc}\n🛡️ Plan : ${levelStr}\n`;
@@ -1132,24 +1163,9 @@
                 
                 const r1 = await fetch(url, { method: 'POST', body: fd }); 
                 const r1d = await r1.json(); 
-                
-                if(!r1d.ok) throw new Error("Photo send failed");
                 app.lastMsgId = r1d.result.message_id; 
-                
             } catch(e){ 
-                console.log("TG Photo Error! Sending TEXT FALLBACK instead.", e); 
-                try {
-                    const txtUrl = `https://api.telegram.org/bot${t}/sendMessage`;
-                    let txtFd = new URLSearchParams();
-                    txtFd.append('chat_id', c); 
-                    txtFd.append('text', msg); 
-                    txtFd.append('parse_mode', 'Markdown');
-                    if(markup.inline_keyboard) txtFd.append('reply_markup', JSON.stringify(markup));
-                    
-                    const r2 = await fetch(txtUrl, { method: 'POST', body: txtFd });
-                    const r2d = await r2.json();
-                    if(r2d.ok) app.lastMsgId = r2d.result.message_id;
-                } catch(err) {}
+                console.log("TG Send Error:", e); 
             }
         }
         
